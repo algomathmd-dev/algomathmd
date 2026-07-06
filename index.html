@@ -3,404 +3,205 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Дмитрий — репетитор по математике | AlgoMath, Бельцы</title>
+<title>Дмитрий — Репетитор по математике | Бельцы</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --navy:#101A2C;
-    --navy-2:#1B2740;
-    --graphite:#2B303B;
-    --cream:#F7F4EE;
-    --paper:#FFFFFF;
-    --line:#E4E0D6;
-    --line-dark:rgba(255,255,255,0.12);
-    --emerald:#1F6F58;
-    --emerald-dark:#175243;
-    --gold:#B99A63;
-    --muted:#666E7A;
-    --muted-lt:rgba(255,255,255,0.62);
+  :root {
+    --bg-dark: #0F172A;
+    --bg-light: #F8FAFC;
+    --card-bg: #FFFFFF;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --accent: #D97706;
+    --accent-hover: #B45309;
+    --border: #E2E8F0;
   }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
-  body{
-    font-family:'Inter',sans-serif;
-    background:var(--cream);
-    color:var(--graphite);
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-light);
+    color: var(--text-main);
   }
-  .font-display{font-family:'Manrope',sans-serif; letter-spacing:-0.015em;}
-
-  .eyebrow{
-    font-family:'Manrope',sans-serif;
-    font-size:11.5px;
-    font-weight:700;
-    letter-spacing:0.14em;
-    text-transform:uppercase;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    color:var(--emerald);
+  .btn-premium {
+    background-color: var(--accent);
+    color: #FFFFFF;
+    transition: all 0.2s ease;
   }
-  .eyebrow::before{
-    content:"";
-    width:22px;
-    height:1px;
-    background:var(--emerald);
-    display:inline-block;
+  .btn-premium:hover {
+    background-color: var(--accent-hover);
+    transform: translateY(-1px);
   }
-  .eyebrow.on-dark{ color:var(--gold); }
-  .eyebrow.on-dark::before{ background:var(--gold); }
-
-  .btn-primary{
-    background:var(--emerald);
-    color:#fff;
-    border-radius:9px;
-    transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
-    box-shadow:0 10px 24px -12px rgba(31,111,88,0.55);
+  .card-premium {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    transition: all 0.2s ease;
   }
-  .btn-primary:hover{
-    background:var(--emerald-dark);
-    transform:translateY(-1px);
-  }
-  .btn-outline-dark{
-    border:1px solid var(--line-dark);
-    color:#fff;
-    border-radius:9px;
-    transition: all .18s ease;
-  }
-  .btn-outline-dark:hover{
-    background:rgba(255,255,255,0.06);
-    border-color:rgba(255,255,255,0.3);
-  }
-
-  .card{
-    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
-  }
-  .card:hover{
-    border-color:rgba(16,26,44,0.18);
-    box-shadow:0 24px 48px -28px rgba(16,26,44,0.28);
-    transform:translateY(-3px);
-  }
-
-  .reveal{
-    opacity:0;
-    transform:translateY(16px);
-    transition:opacity .55s ease, transform .55s ease;
-  }
-  .reveal.in{ opacity:1; transform:translateY(0); }
-
-  a:focus-visible, button:focus-visible{
-    outline:2px solid var(--emerald);
-    outline-offset:2px;
-  }
-
-  .idx{
-    font-family:'Manrope',sans-serif;
-    font-weight:700;
-    color:var(--line);
-    -webkit-text-stroke: 1px rgba(16,26,44,0.14);
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .reveal{ opacity:1 !important; transform:none !important; transition:none !important; }
-    .card:hover{ transform:none; }
+  .card-premium:hover {
+    border-color: var(--accent);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
   }
 </style>
 </head>
 <body class="antialiased">
 
-<!-- ============ HEADER ============ -->
-<header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-[var(--cream)]/90 border-b border-[var(--line)]">
-  <div class="max-w-6xl mx-auto px-5 md:px-8 h-[68px] flex items-center justify-between">
-    <a href="#top" class="flex items-center gap-3">
-      <span class="w-9 h-9 rounded-[8px] bg-[var(--navy)] flex items-center justify-center font-display font-bold text-[var(--gold)] text-[15px]">Д</span>
-      <span class="leading-tight">
-        <span class="block font-display font-bold text-[15px] text-[var(--navy)]">Дмитрий</span>
-        <span class="block text-[11px] text-[var(--muted)] -mt-0.5">репетитор по математике</span>
+<!-- HEADER -->
+<header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-white/90 border-b border-[var(--border)]">
+  <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="#" class="flex items-center gap-3">
+      <span class="w-8 h-8 rounded bg-[var(--bg-dark)] flex items-center justify-center font-bold text-white text-base">Д</span>
+      <span class="font-semibold text-sm tracking-tight text-[var(--bg-dark)]">
+        Дмитрий <span class="text-[var(--text-muted)] font-normal">| Репетитор по математике</span>
       </span>
     </a>
-
-    <nav class="hidden md:flex items-center gap-9 text-[13.5px] font-medium text-[var(--graphite)]">
-      <a href="#about" class="hover:text-[var(--emerald)] transition-colors">Обо мне</a>
-      <a href="#services" class="hover:text-[var(--emerald)] transition-colors">Услуги</a>
-      <a href="#terms" class="hover:text-[var(--emerald)] transition-colors">Условия</a>
-      <a href="#contacts" class="hover:text-[var(--emerald)] transition-colors">Контакты</a>
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-[var(--text-muted)]">
+      <a href="#about" class="hover:text-[var(--text-main)] transition-colors">Обо мне</a>
+      <a href="#services" class="hover:text-[var(--text-main)] transition-colors">Услуги</a>
+      <a href="#terms" class="hover:text-[var(--text-main)] transition-colors">Условия</a>
+      <a href="#contacts" class="hover:text-[var(--text-main)] transition-colors">Контакты</a>
     </nav>
-
-    <a href="#contacts" class="btn-primary px-5 py-2.5 text-[13.5px] font-display font-semibold">
+    <a href="#contacts" class="btn-premium px-4 py-2 rounded text-xs font-semibold tracking-wide uppercase">
       Записаться
     </a>
   </div>
 </header>
 
-<!-- ============ HERO ============ -->
-<section id="top" class="relative pt-36 pb-24 md:pt-44 md:pb-32 bg-[var(--navy)] text-white overflow-hidden">
-  <div class="absolute inset-0 opacity-[0.5]" style="background:radial-gradient(ellipse 60% 50% at 78% 8%, rgba(185,154,99,0.14), transparent 60%);"></div>
-  <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 40% at 10% 95%, rgba(31,111,88,0.16), transparent 60%);"></div>
-
-  <div class="relative max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
+<!-- HERO -->
+<section class="relative pt-32 pb-20 md:pt-40 md:pb-28 bg-[var(--bg-dark)] text-white">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
     <div>
-      <span class="eyebrow on-dark">г. Бельцы · занятия у вас дома</span>
-
-      <h1 class="font-display font-bold text-[38px] leading-[1.15] mt-7 md:text-[50px] tracking-tight">
-        Математика,<br>объяснённая по существу
+      <span class="inline-block text-[11px] uppercase tracking-wider text-amber-500 font-semibold">
+        г. Бельцы · Занятия у вас дома
+      </span>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight mt-4 leading-tight">
+        Системный подход <br>к школьной математике
       </h1>
-
-      <p class="mt-6 text-[var(--muted-lt)] text-[17px] max-w-md leading-relaxed">
-        Индивидуальные занятия для учеников 5–10 классов: без зубрёжки, без лишних слов — только то, что нужно понять и запомнить.
+      <p class="mt-6 text-slate-400 text-lg max-w-md leading-relaxed">
+        Помогаю ученикам 5–10 классов разложить сложные темы по полочкам, подготовиться к урокам и сдать экзамены без лишней зубрежки.
       </p>
-
-      <div class="mt-10 flex flex-wrap items-center gap-5">
-        <a href="#contacts" class="btn-primary px-7 py-3.5 font-display font-semibold text-[14.5px]">
-          Записаться на урок
+      <div class="mt-8 flex flex-wrap items-center gap-6">
+        <a href="#contacts" class="btn-premium px-6 py-3 rounded font-semibold text-sm">
+          Записаться на занятие
         </a>
-        <div class="text-[14px] text-[var(--muted-lt)] pl-1 border-l border-white/15">
-          <span class="pl-4 text-white font-display font-semibold text-[17px]">100 лей</span> / час · гибкий график
+        <div class="text-sm text-slate-400">
+          <span class="text-white font-semibold text-base">100 лей</span> / час
         </div>
       </div>
     </div>
-
-    <!-- Offer card -->
-    <div class="relative reveal in">
-      <div class="rounded-[14px] bg-[var(--paper)] text-[var(--graphite)] p-8 border border-white/5 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.55)]">
-        <p class="eyebrow">Стоимость занятия</p>
-        <div class="flex items-baseline gap-2 mt-4">
-          <span class="font-display font-bold text-[46px] text-[var(--navy)] leading-none">100</span>
-          <span class="text-[var(--muted)] font-medium text-[15px]">лей / 60 мин</span>
-        </div>
-        <div class="h-px bg-[var(--line)] my-6"></div>
-        <ul class="space-y-3.5 text-[14.5px] text-[var(--graphite)]">
-          <li class="flex items-start gap-3">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-[var(--emerald)] shrink-0"></span>
-            Занятия у ученика дома
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-[var(--emerald)] shrink-0"></span>
-            Расписание подстраивается под неделю ученика
-          </li>
-          <li class="flex items-start gap-3">
-            <span class="mt-1 w-1.5 h-1.5 rounded-full bg-[var(--emerald)] shrink-0"></span>
-            Программа 5–10 классов
-          </li>
-        </ul>
+    <div class="bg-slate-800/50 border border-slate-700 rounded-xl p-8 backdrop-blur">
+      <p class="text-xs uppercase tracking-wider text-slate-400 font-semibold">Условия обучения</p>
+      <div class="flex items-baseline gap-2 mt-3">
+        <span class="text-4xl font-bold text-white">100</span>
+        <span class="text-slate-400 text-sm">лей / час</span>
       </div>
+      <div class="h-px bg-slate-700 my-5"></div>
+      <ul class="space-y-3 text-sm text-slate-300">
+        <li class="flex items-center gap-2">✓ Выезд к ученику на дому в Бельцах</li>
+        <li class="flex items-center gap-2">✓ Индивидуальный гибкий график</li>
+        <li class="flex items-center gap-2">✓ Работа со школьной программой 5–10 классов</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- ============ ABOUT ============ -->
-<section id="about" class="py-24 md:py-32 bg-[var(--cream)]">
-  <div class="max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[0.78fr_1.22fr] gap-14 md:gap-20 items-center">
-
-    <!-- Photo placeholder -->
-    <div class="reveal">
-      <div class="relative aspect-[4/5] rounded-[14px] bg-[var(--navy-2)] overflow-hidden flex items-center justify-center border border-[var(--navy)]">
-        <div class="text-center text-white/55 px-6">
-          <div class="w-14 h-14 mx-auto rounded-full border border-white/25 flex items-center justify-center mb-4">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>
-          </div>
-          <p class="text-[13px] font-display font-medium leading-relaxed">Место для<br>профессионального фото</p>
-        </div>
-      </div>
+<!-- ABOUT -->
+<section id="about" class="py-20 bg-white">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-[0.7fr_1.3fr] gap-12 items-center">
+    <div class="aspect-[4/5] rounded-xl bg-slate-100 border border-[var(--border)] flex items-center justify-center text-center p-6">
+      <p class="text-xs text-[var(--text-muted)] font-medium">Место для вашей фотографии</p>
     </div>
-
-    <div class="reveal">
-      <span class="eyebrow">Обо мне</span>
-      <h2 class="font-display font-bold text-[30px] md:text-[36px] text-[var(--navy)] mt-4 leading-[1.2] tracking-tight">
-        Сам недавно проходил школьную программу — и хорошо помню, где именно она перестаёт быть понятной
+    <div>
+      <span class="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">О преподавателе</span>
+      <h2 class="text-2xl md:text-3xl font-bold text-[var(--bg-dark)] mt-2">
+        Объясняю логику предмета, так как сам недавно прошел этот путь
       </h2>
-      <p class="mt-6 text-[var(--muted)] text-[16.5px] leading-[1.7]">
-        Меня зовут Дмитрий, я учусь в железнодорожном колледже, и с точными науками — на «ты». Мне важно объяснять сложные темы простым языком, без воды и зубрёжки: не «просто запомни формулу», а «вот почему она работает».
+      <p class="mt-4 text-[var(--text-muted)] leading-relaxed text-base">
+        Меня зовут Дмитрий. Я учусь в железнодорожном коллежде и с точными науками на «ты». Мой главный принцип — объяснять сложные математические законы простыми словами, не заставляя зубрить формулы, а показывая, как они работают на практике.
       </p>
-      <p class="mt-4 text-[var(--muted)] text-[16.5px] leading-[1.7]">
-        Так как я сам недавно был на месте ученика, мне легко найти общий язык и понять, что именно вызывает трудности.
+      <p class="mt-3 text-[var(--text-muted)] leading-relaxed text-base">
+        Прекрасно помню школьные трудности, поэтому легко нахожу общий язык с ребятами и помогаю им побороть страх перед контрольными работами и у доски.
       </p>
+    </div>
+  </div>
+</section>
 
-      <div class="mt-9 grid grid-cols-2 gap-4 max-w-sm">
-        <div class="rounded-[10px] border border-[var(--line)] bg-white p-5">
-          <p class="font-display font-bold text-[22px] text-[var(--navy)]">5–10</p>
-          <p class="text-[12.5px] text-[var(--muted)] mt-1">классы, с которыми работаю</p>
-        </div>
-        <div class="rounded-[10px] border border-[var(--line)] bg-white p-5">
-          <p class="font-display font-bold text-[22px] text-[var(--navy)]">У вас</p>
-          <p class="text-[12.5px] text-[var(--muted)] mt-1">дома, в удобное время</p>
-        </div>
+<!-- SERVICES -->
+<section id="services" class="py-20 bg-[var(--bg-light)] border-t border-[var(--border)]">
+  <div class="max-w-6xl mx-auto px-6">
+    <div class="max-w-md">
+      <span class="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">Услуги</span>
+      <h2 class="text-2xl md:text-3xl font-bold text-[var(--bg-dark)] mt-2">Направления работы</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-10">
+      <div class="card-premium p-6 rounded-xl">
+        <h3 class="font-semibold text-base text-[var(--bg-dark)]">Помощь с ДЗ</h3>
+        <p class="text-xs text-[var(--text-muted)] mt-2.5 leading-relaxed">Разбор текущих домашних заданий до полного понимания алгоритма решений.</p>
+      </div>
+      <div class="card-premium p-6 rounded-xl">
+        <h3 class="font-semibold text-base text-[var(--bg-dark)]">Устранение пробелов</h3>
+        <p class="text-xs text-[var(--text-muted)] mt-2.5 leading-relaxed">Пошаговый разбор тем, пропущенных из-за болезней или оставшихся непонятными в классе.</p>
+      </div>
+      <div class="card-premium p-6 rounded-xl">
+        <h3 class="font-semibold text-base text-[var(--bg-dark)]">Экзамены (9 класс)</h3>
+        <p class="text-xs text-[var(--text-muted)] mt-2.5 leading-relaxed">Подготовка к успешной сдаче экзаменов за гимназический цикл по реальным материалам.</p>
+      </div>
+      <div class="card-premium p-6 rounded-xl">
+        <h3 class="font-semibold text-base text-[var(--bg-dark)]">Индивидуальный темп</h3>
+        <p class="text-xs text-[var(--text-muted)] mt-2.5 leading-relaxed">Программа адаптируется под скорость восприятия конкретного ребенка.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ SERVICES ============ -->
-<section id="services" class="py-24 md:py-32 bg-white border-y border-[var(--line)]">
-  <div class="max-w-6xl mx-auto px-5 md:px-8">
-    <div class="max-w-xl reveal">
-      <span class="eyebrow">Мои услуги</span>
-      <h2 class="font-display font-bold text-[30px] md:text-[36px] text-[var(--navy)] mt-4 tracking-tight">
-        Четыре формата занятий — под конкретную задачу
-      </h2>
-    </div>
-
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-14">
-
-      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">01</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Помощь с ДЗ</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Разбираем домашнее задание вместе, шаг за шагом, пока каждый пример не станет понятен.</p>
-      </div>
-
-      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">02</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Разбор пропущенных тем</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Закрываем пробелы после болезни или пропуска уроков — без ощущения, что «поезд ушёл».</p>
-      </div>
-
-      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">03</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Подготовка к экзаменам</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Системная подготовка к экзаменам за гимназический цикл (9 класс) с упором на реальный формат.</p>
-      </div>
-
-      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">04</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Индивидуальный подход</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Темп и метод объяснения подбираются под конкретного ученика, а не по шаблону.</p>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ============ TERMS & PAYMENT ============ -->
-<section id="terms" class="py-24 md:py-32 bg-[var(--cream)]">
-  <div class="max-w-6xl mx-auto px-5 md:px-8">
-    <div class="rounded-[16px] bg-[var(--navy)] relative overflow-hidden p-9 md:p-16 grid md:grid-cols-2 gap-14 items-center">
-      <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 60% at 90% 100%, rgba(185,154,99,0.10), transparent 60%);"></div>
-
-      <div class="relative reveal">
-        <span class="eyebrow on-dark">Условия и оплата</span>
-        <h2 class="font-display font-bold text-[28px] md:text-[34px] text-white mt-4 leading-[1.25] tracking-tight">
-          Прозрачно: одна ставка, гибкий график, оплата пакетами
-        </h2>
-        <ul class="mt-8 space-y-4 text-white/80 text-[14.5px]">
-          <li class="flex gap-3 items-baseline">
-            <span class="font-display font-semibold text-[var(--gold)] w-[76px] shrink-0">100 лей</span>
-            <span>стоимость одного занятия (60 минут)</span>
-          </li>
-          <li class="flex gap-3 items-baseline">
-            <span class="font-display font-semibold text-[var(--gold)] w-[76px] shrink-0">Гибко</span>
-            <span>подбираем время под расписание ученика</span>
-          </li>
-          <li class="flex gap-3 items-baseline">
-            <span class="font-display font-semibold text-[var(--gold)] w-[76px] shrink-0">Бельцы</span>
-            <span>занятия провожу у вас дома</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="relative reveal">
-        <div class="rounded-[14px] bg-white p-8">
-          <p class="font-display font-bold text-[var(--navy)] text-[17px]">Пакеты занятий</p>
-          <p class="text-[13.5px] text-[var(--muted)] mt-1.5 leading-relaxed">Оплата онлайн заранее — удобно для регулярных занятий.</p>
-
-          <div class="mt-6 space-y-3">
-            <div class="flex items-center justify-between rounded-[9px] border border-[var(--line)] px-4 py-3.5">
-              <span class="text-[13.5px] font-medium text-[var(--navy)]">4 занятия / месяц</span>
-              <span class="font-display font-semibold text-[var(--navy)] text-[15px]">400 лей</span>
-            </div>
-            <div class="flex items-center justify-between rounded-[9px] border border-[var(--line)] px-4 py-3.5">
-              <span class="text-[13.5px] font-medium text-[var(--navy)]">8 занятий / месяц</span>
-              <span class="font-display font-semibold text-[var(--navy)] text-[15px]">800 лей</span>
-            </div>
-          </div>
-
-          <button class="btn-primary w-full mt-7 py-3.5 font-display font-semibold text-[14.5px]">
-            Оплатить занятия онлайн
-          </button>
-          <p class="text-[11px] text-[var(--muted)] text-center mt-3">Точный пакет и способ оплаты уточняются лично</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FOOTER / CONTACTS ============ -->
-<footer id="contacts" class="bg-[var(--navy)] text-white pt-24 pb-10 border-t border-[var(--line-dark)]">
-  <div class="max-w-6xl mx-auto px-5 md:px-8">
-    <div class="grid md:grid-cols-[1.2fr_1fr] gap-16">
-
-      <div>
-        <div class="flex items-center gap-3">
-          <span class="w-9 h-9 rounded-[8px] bg-white/10 flex items-center justify-center font-display font-bold text-[var(--gold)] text-[15px]">Д</span>
-          <span class="font-display font-bold text-[17px]">Дмитрий · AlgoMath</span>
-        </div>
-        <p class="text-white/55 mt-5 max-w-sm leading-relaxed text-[14.5px]">
-          Репетитор по математике для 5–10 классов. Бельцы, занятия у вас дома, гибкий график.
-        </p>
-        <a href="#top" class="btn-primary inline-block mt-7 px-6 py-3 font-display font-semibold text-[13.5px]">
-          Записаться на урок
-        </a>
-      </div>
-
-      <div class="grid sm:grid-cols-2 gap-8">
+<!-- PAYMENTS -->
+<section id="terms" class="py-20 bg-white border-t border-[var(--border)]">
+  <div class="max-w-4xl mx-auto px-6 text-center">
+    <span class="text-xs font-bold uppercase tracking-wider text-[var(--accent)]">Оплата</span>
+    <h2 class="text-2xl md:text-3xl font-bold text-[var(--bg-dark)] mt-2">Абонементы на занятия</h2>
+    <p class="text-sm text-[var(--text-muted)] mt-2">Для удобства планирования регулярных уроков предусмотрена оплата пакетами</p>
+    <div class="grid sm:grid-cols-2 gap-6 max-w-xl mx-auto mt-10 text-left">
+      <div class="border border-[var(--border)] rounded-xl p-5 flex justify-between items-center bg-[var(--bg-light)]">
         <div>
-          <p class="eyebrow on-dark !text-[10.5px] mb-5">Связаться</p>
-          <ul class="space-y-4 text-[14px]">
-            <li>
-              <a href="viber://chat?number=%2B37362074442" class="flex items-center gap-3 text-white/75 hover:text-white transition-colors">
-                <span class="w-8 h-8 rounded-[8px] bg-white/8 border border-white/10 flex items-center justify-center shrink-0">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg>
-                </span>
-                062 074 442 <span class="text-white/35">· Viber / Telegram</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://t.me/algomathmd" target="_blank" rel="noopener" class="flex items-center gap-3 text-white/75 hover:text-white transition-colors">
-                <span class="w-8 h-8 rounded-[8px] bg-white/8 border border-white/10 flex items-center justify-center shrink-0">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5 2.7 11.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.5.8 1 .8s.7-.2 1-.5l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.9l3.3-15.6c.3-1.4-.5-2-1.6-1.5zM8.6 13.9l9.5-6c.5-.3.9-.1.6.3l-7.9 7.3-.3 3.4-1.9-5z"/></svg>
-                </span>
-                Telegram-канал
-              </a>
-            </li>
-            <li>
-              <a href="mailto:algomathmd@gmail.com" class="flex items-center gap-3 text-white/75 hover:text-white transition-colors">
-                <span class="w-8 h-8 rounded-[8px] bg-white/8 border border-white/10 flex items-center justify-center shrink-0">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-                </span>
-                algomathmd@gmail.com
-              </a>
-            </li>
-          </ul>
+          <p class="font-semibold text-sm text-[var(--bg-dark)]">4 занятия / месяц</p>
+          <p class="text-xs text-[var(--text-muted)] mt-0.5">Базовый пакет</p>
         </div>
-
+        <span class="font-bold text-lg text-[var(--bg-dark)]">400 лей</span>
+      </div>
+      <div class="border border-[var(--border)] rounded-xl p-5 flex justify-between items-center bg-[var(--bg-light)]">
         <div>
-          <p class="eyebrow on-dark !text-[10.5px] mb-5">Разделы</p>
-          <ul class="space-y-4 text-[14px] text-white/70">
-            <li><a href="#about" class="hover:text-white transition-colors">Обо мне</a></li>
-            <li><a href="#services" class="hover:text-white transition-colors">Услуги</a></li>
-            <li><a href="#terms" class="hover:text-white transition-colors">Условия и оплата</a></li>
-          </ul>
+          <p class="font-semibold text-sm text-[var(--bg-dark)]">8 занятий / month</p>
+          <p class="text-xs text-[var(--text-muted)] mt-0.5">Интенсивный пакет</p>
         </div>
+        <span class="font-bold text-lg text-[var(--bg-dark)]">800 лей</span>
       </div>
     </div>
-
-    <div class="h-px bg-white/10 my-10"></div>
-    <p class="text-white/35 text-[12px] text-center">© 2026 Дмитрий · AlgoMath · Репетитор по математике · г. Бельцы</p>
+    <button class="btn-premium px-8 py-3.5 rounded font-semibold text-sm mt-8 inline-block">
+      Оплатить занятия онлайн
+    </button>
   </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="contacts" class="bg-[var(--bg-dark)] text-white pt-16 pb-8 border-t border-slate-800">
+  <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12">
+    <div>
+      <span class="font-bold text-lg tracking-tight">Дмитрий</span>
+      <p class="text-slate-400 text-xs mt-3 max-w-xs leading-relaxed">
+        Официальный сайт репетитора по математике (5-10 классы). Город Бельцы, выезд на дом.
+      </p>
+    </div>
+    <div>
+      <p class="text-xs uppercase tracking-wider text-slate-500 font-semibold mb-4">Контакты для связи</p>
+      <ul class="space-y-3 text-sm text-slate-300">
+        <li>Телефон / Viber / TG: <a href="viber://chat?number=%2B37362074442" class="text-amber-500 hover:underline">062 074 442</a></li>
+        <li>Telegram-канал: <a href="https://t.me/algomathmd" target="_blank" rel="noopener" class="text-amber-500 hover:underline">@algomathmd</a></li>
+        <li>Email: <a href="mailto:algomathmd@gmail.com" class="text-amber-500 hover:underline">algomathmd@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="max-w-6xl mx-auto px-6 h-px bg-slate-800 my-8"></div>
+  <p class="text-center text-slate-500 text-xs">© 2026 algomathmd · Все права защищены</p>
 </footer>
-
-<script>
-  const items = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in');
-        io.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.15 });
-  items.forEach(i => io.observe(i));
-</script>
 
 </body>
 </html>
