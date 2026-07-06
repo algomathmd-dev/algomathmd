@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Дмитрий — репетитор по математике | Бельцы</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#141B33;
+    --indigo:#1E2A4A;
+    --indigo-2:#2A3B63;
+    --paper:#FBFAF7;
+    --line:#E4E1D8;
+    --orange:#FF6B2C;
+    --orange-dark:#E4571C;
+    --mint:#3FBFA0;
+    --muted:#5B6478;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+  }
+  .font-display{font-family:'Space Grotesk',sans-serif;}
+
+  /* Graph-paper texture, used sparingly as the page's signature motif */
+  .grid-paper{
+    background-image:
+      linear-gradient(rgba(30,42,74,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(30,42,74,0.06) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+  .grid-paper-dark{
+    background-image:
+      linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 34px 34px;
+  }
+
+  .eq{
+    font-family:'Space Grotesk',sans-serif;
+    letter-spacing:-0.01em;
+  }
+
+  .btn-orange{
+    background:var(--orange);
+    color:#fff;
+    box-shadow: 0 8px 20px -6px rgba(255,107,44,0.55);
+    transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+  }
+  .btn-orange:hover{
+    background:var(--orange-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px -6px rgba(255,107,44,0.6);
+  }
+  .btn-outline{
+    border:1.5px solid rgba(255,255,255,0.35);
+    color:#fff;
+    transition: all .18s ease;
+  }
+  .btn-outline:hover{
+    background:rgba(255,255,255,0.08);
+    border-color:#fff;
+  }
+
+  .reveal{
+    opacity:0;
+    transform: translateY(18px);
+    transition: opacity .6s ease, transform .6s ease;
+  }
+  .reveal.in{
+    opacity:1;
+    transform: translateY(0);
+  }
+
+  .card{
+    transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -18px rgba(30,42,74,0.25);
+    border-color: rgba(30,42,74,0.25);
+  }
+
+  .num-tag{
+    font-family:'Space Grotesk',sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--orange);
+    outline-offset:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1 !important; transform:none !important; transition:none !important;}
+    .card:hover{ transform:none; }
+  }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- ============ HEADER ============ -->
+<header class="fixed top-0 inset-x-0 z-50 backdrop-blur-md bg-[#FBFAF7]/85 border-b border-[var(--line)]">
+  <div class="max-w-6xl mx-auto px-5 md:px-8 h-16 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-2.5 group">
+      <span class="w-9 h-9 rounded-lg bg-[var(--indigo)] flex items-center justify-center font-display font-bold text-[var(--orange)] text-lg">Д</span>
+      <span class="font-display font-semibold text-[15px] leading-tight text-[var(--indigo)]">
+        Дмитрий<br class="hidden sm:block">
+        <span class="font-normal text-[11px] text-[var(--muted)] font-sans">репетитор по математике</span>
+      </span>
+    </a>
+
+    <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-[var(--indigo)]">
+      <a href="#about" class="hover:text-[var(--orange)] transition-colors">Обо мне</a>
+      <a href="#services" class="hover:text-[var(--orange)] transition-colors">Услуги</a>
+      <a href="#terms" class="hover:text-[var(--orange)] transition-colors">Условия</a>
+      <a href="#contacts" class="hover:text-[var(--orange)] transition-colors">Контакты</a>
+    </nav>
+
+    <a href="#contacts" class="btn-orange px-5 py-2.5 rounded-full text-sm font-semibold font-display">
+      Записаться
+    </a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative pt-32 pb-20 md:pt-44 md:pb-28 bg-[var(--indigo)] text-white overflow-hidden">
+  <div class="absolute inset-0 grid-paper-dark"></div>
+  <div class="absolute -right-24 -top-24 w-[420px] h-[420px] rounded-full bg-[var(--orange)]/10 blur-3xl"></div>
+  <div class="absolute left-1/2 -bottom-32 -translate-x-1/2 w-[600px] h-[300px] rounded-full bg-[var(--mint)]/10 blur-3xl"></div>
+
+  <div class="relative max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[1.15fr_0.85fr] gap-14 items-center">
+    <div>
+      <span class="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-white/70 border border-white/20 rounded-full px-3.5 py-1.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--mint)]"></span>
+        г. Бельцы · занятия у вас дома
+      </span>
+
+      <h1 class="font-display font-semibold text-[40px] leading-[1.08] mt-6 md:text-[54px]">
+        Математика —<br>
+        не страшно.<br>
+        <span class="text-[var(--orange)]">Это система.</span>
+      </h1>
+
+      <p class="mt-6 text-white/75 text-lg max-w-md leading-relaxed">
+        Помогаю ученикам 5–10 классов разобраться в математике без зубрёжки — просто, по делу и без лишних слов.
+      </p>
+
+      <!-- Signature equation strip -->
+      <div class="mt-8 eq text-[15px] md:text-base flex flex-wrap items-center gap-x-2.5 gap-y-2 text-white/85">
+        <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">Пропущенная тема</span>
+        <span class="text-[var(--orange)] font-semibold">+</span>
+        <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">Понятный язык</span>
+        <span class="text-[var(--orange)] font-semibold">=</span>
+        <span class="px-3 py-1.5 rounded-lg bg-[var(--orange)]/15 border border-[var(--orange)]/40 text-white">Уверенность на уроке</span>
+      </div>
+
+      <div class="mt-9 flex flex-wrap items-center gap-4">
+        <a href="#contacts" class="btn-orange px-7 py-3.5 rounded-full font-display font-semibold text-[15px]">
+          Записаться на урок
+        </a>
+        <div class="text-sm text-white/70">
+          <span class="text-white font-display font-semibold text-lg">100 лей</span> / час · гибкий график
+        </div>
+      </div>
+    </div>
+
+    <!-- Offer / stat card -->
+    <div class="relative reveal in">
+      <div class="rounded-2xl bg-white text-[var(--ink)] p-7 shadow-[0_30px_60px_-20px_rgba(0,0,0,0.45)]">
+        <p class="text-xs uppercase tracking-[0.14em] text-[var(--muted)] font-semibold">Стоимость занятия</p>
+        <div class="flex items-baseline gap-2 mt-2">
+          <span class="font-display font-bold text-5xl text-[var(--indigo)]">100</span>
+          <span class="text-[var(--muted)] font-medium">лей / час</span>
+        </div>
+        <div class="h-px bg-[var(--line)] my-5"></div>
+        <ul class="space-y-3 text-sm">
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-[var(--mint)] font-bold">✓</span> Занятия у ученика дома
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-[var(--mint)] font-bold">✓</span> Гибкое расписание под вашу неделю
+          </li>
+          <li class="flex items-start gap-2.5">
+            <span class="mt-0.5 text-[var(--mint)] font-bold">✓</span> Программа 5–10 классов
+          </li>
+        </ul>
+      </div>
+      <div class="absolute -z-10 -bottom-5 -right-5 w-full h-full rounded-2xl border-2 border-white/15"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="py-24 md:py-32 bg-[var(--paper)]">
+  <div class="max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[0.8fr_1.2fr] gap-12 md:gap-16 items-center">
+
+    <!-- Photo placeholder -->
+    <div class="reveal">
+      <div class="relative aspect-[4/5] rounded-2xl bg-[var(--indigo)] grid-paper-dark overflow-hidden flex items-center justify-center">
+        <div class="text-center text-white/60 px-6">
+          <div class="w-16 h-16 mx-auto rounded-full border-2 border-dashed border-white/30 flex items-center justify-center mb-3">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+          </div>
+          <p class="text-sm font-display">Место для<br>профессионального фото</p>
+        </div>
+        <div class="absolute -bottom-3 -right-3 w-20 h-20 rounded-full bg-[var(--orange)]/20 blur-2xl"></div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <span class="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--orange)]">Обо мне</span>
+      <h2 class="font-display font-semibold text-3xl md:text-4xl text-[var(--indigo)] mt-3 leading-tight">
+        Сам недавно проходил школьную программу — и хорошо помню, где именно она перестаёт быть понятной
+      </h2>
+      <p class="mt-6 text-[var(--muted)] text-[17px] leading-relaxed">
+        Меня зовут Дмитрий, я учусь в железнодорожном колледже, и с точными науками — на «ты». Мне важно объяснять сложные темы простым языком, без воды и зубрёжки: не «просто запомни формулу», а «вот почему она работает».
+      </p>
+      <p class="mt-4 text-[var(--muted)] text-[17px] leading-relaxed">
+        Так как я сам недавно был на месте ученика, мне легко найти общий язык и понять, что именно вызывает трудности — будь то x в уравнении или страх перед контрольной.
+      </p>
+
+      <div class="mt-8 grid grid-cols-2 gap-4 max-w-sm">
+        <div class="rounded-xl border border-[var(--line)] bg-white p-4">
+          <p class="font-display font-bold text-2xl text-[var(--indigo)]">5–10</p>
+          <p class="text-xs text-[var(--muted)] mt-1">классы, с которыми работаю</p>
+        </div>
+        <div class="rounded-xl border border-[var(--line)] bg-white p-4">
+          <p class="font-display font-bold text-2xl text-[var(--indigo)]">У вас</p>
+          <p class="text-xs text-[var(--muted)] mt-1">дома, в удобное время</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="py-24 md:py-32 bg-white border-y border-[var(--line)]">
+  <div class="max-w-6xl mx-auto px-5 md:px-8">
+    <div class="max-w-xl reveal">
+      <span class="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--orange)]">Мои услуги</span>
+      <h2 class="font-display font-semibold text-3xl md:text-4xl text-[var(--indigo)] mt-3">
+        Четыре формата занятий — под конкретную задачу
+      </h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-12">
+
+      <div class="card reveal rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-6">
+        <div class="w-11 h-11 rounded-lg bg-[var(--indigo)] flex items-center justify-center text-[var(--orange)] font-display font-bold mb-5">✎</div>
+        <h3 class="font-display font-semibold text-lg text-[var(--indigo)]">Помощь с ДЗ</h3>
+        <p class="text-sm text-[var(--muted)] mt-2.5 leading-relaxed">Разбираем домашнее задание вместе, шаг за шагом, пока каждый пример не станет понятен.</p>
+      </div>
+
+      <div class="card reveal rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-6">
+        <div class="w-11 h-11 rounded-lg bg-[var(--indigo)] flex items-center justify-center text-[var(--orange)] font-display font-bold mb-5">↻</div>
+        <h3 class="font-display font-semibold text-lg text-[var(--indigo)]">Разбор пропущенных тем</h3>
+        <p class="text-sm text-[var(--muted)] mt-2.5 leading-relaxed">Закрываем пробелы после болезни или пропуска уроков — без ощущения, что «поезд ушёл».</p>
+      </div>
+
+      <div class="card reveal rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-6">
+        <div class="w-11 h-11 rounded-lg bg-[var(--indigo)] flex items-center justify-center text-[var(--orange)] font-display font-bold mb-5">9</div>
+        <h3 class="font-display font-semibold text-lg text-[var(--indigo)]">Подготовка к экзаменам</h3>
+        <p class="text-sm text-[var(--muted)] mt-2.5 leading-relaxed">Системная подготовка к экзаменам за гимназический цикл (9 класс) с упором на реальный формат.</p>
+      </div>
+
+      <div class="card reveal rounded-2xl border border-[var(--line)] bg-[var(--paper)] p-6">
+        <div class="w-11 h-11 rounded-lg bg-[var(--indigo)] flex items-center justify-center text-[var(--orange)] font-display font-bold mb-5">≈</div>
+        <h3 class="font-display font-semibold text-lg text-[var(--indigo)]">Индивидуальный подход</h3>
+        <p class="text-sm text-[var(--muted)] mt-2.5 leading-relaxed">Темп и метод объяснения подбираются под конкретного ученика, а не по шаблону.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ TERMS & PAYMENT ============ -->
+<section id="terms" class="py-24 md:py-32 bg-[var(--paper)]">
+  <div class="max-w-6xl mx-auto px-5 md:px-8">
+    <div class="rounded-3xl bg-[var(--indigo)] grid-paper-dark relative overflow-hidden p-8 md:p-14 grid md:grid-cols-2 gap-12 items-center">
+      <div class="absolute -left-16 -bottom-16 w-64 h-64 rounded-full bg-[var(--mint)]/10 blur-3xl"></div>
+
+      <div class="relative reveal">
+        <span class="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--orange)]">Условия и оплата</span>
+        <h2 class="font-display font-semibold text-3xl md:text-4xl text-white mt-3 leading-tight">
+          Прозрачно: одна ставка, гибкий график, оплата пакетами
+        </h2>
+        <ul class="mt-7 space-y-4 text-white/80 text-[15px]">
+          <li class="flex gap-3">
+            <span class="num-tag text-[var(--orange)] font-semibold">100 лей</span>
+            <span>стоимость одного занятия (60 минут)</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="num-tag text-[var(--orange)] font-semibold">Гибко</span>
+            <span>подбираем время под расписание ученика</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="num-tag text-[var(--orange)] font-semibold">Бельцы</span>
+            <span>занятия провожу у вас дома</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="relative reveal">
+        <div class="rounded-2xl bg-white p-7">
+          <p class="font-display font-semibold text-[var(--indigo)] text-lg">Пакеты занятий</p>
+          <p class="text-sm text-[var(--muted)] mt-1.5">Оплата онлайн заранее — удобно для регулярных занятий.</p>
+
+          <div class="mt-5 space-y-3">
+            <div class="flex items-center justify-between rounded-xl border border-[var(--line)] px-4 py-3">
+              <span class="text-sm font-medium text-[var(--indigo)]">4 занятия / месяц</span>
+              <span class="font-display font-semibold text-[var(--indigo)]">400 лей</span>
+            </div>
+            <div class="flex items-center justify-between rounded-xl border border-[var(--line)] px-4 py-3">
+              <span class="text-sm font-medium text-[var(--indigo)]">8 занятий / месяц</span>
+              <span class="font-display font-semibold text-[var(--indigo)]">800 лей</span>
+            </div>
+          </div>
+
+          <button class="btn-orange w-full mt-6 py-3.5 rounded-full font-display font-semibold text-[15px]">
+            Оплатить занятия онлайн
+          </button>
+          <p class="text-[11px] text-[var(--muted)] text-center mt-3">Точный пакет и способ оплаты уточняются лично</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER / CONTACTS ============ -->
+<footer id="contacts" class="bg-[var(--ink)] text-white pt-20 pb-10">
+  <div class="max-w-6xl mx-auto px-5 md:px-8">
+    <div class="grid md:grid-cols-[1.2fr_1fr] gap-14">
+
+      <div>
+        <div class="flex items-center gap-2.5">
+          <span class="w-9 h-9 rounded-lg bg-[var(--orange)] flex items-center justify-center font-display font-bold text-[var(--ink)] text-lg">Д</span>
+          <span class="font-display font-semibold text-lg">Дмитрий</span>
+        </div>
+        <p class="text-white/60 mt-4 max-w-sm leading-relaxed text-[15px]">
+          Репетитор по математике для 5–10 классов. Бельцы, занятия у вас дома, гибкий график.
+        </p>
+        <a href="#top" class="btn-orange inline-block mt-6 px-6 py-3 rounded-full font-display font-semibold text-sm">
+          Записаться на урок
+        </a>
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-8">
+        <div>
+          <p class="text-xs uppercase tracking-[0.14em] text-white/40 font-semibold mb-4">Связаться</p>
+          <ul class="space-y-3.5 text-sm">
+            <li>
+              <a href="viber://chat?number=%2B37362074442" class="flex items-center gap-3 text-white/80 hover:text-[var(--orange)] transition-colors">
+                <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg>
+                </span>
+                062 074 442 <span class="text-white/40">· Viber / Telegram</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://t.me/algomathmd" target="_blank" rel="noopener" class="flex items-center gap-3 text-white/80 hover:text-[var(--orange)] transition-colors">
+                <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5 2.7 11.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.5.8 1 .8s.7-.2 1-.5l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.9l3.3-15.6c.3-1.4-.5-2-1.6-1.5zM8.6 13.9l9.5-6c.5-.3.9-.1.6.3l-7.9 7.3-.3 3.4-1.9-5z"/></svg>
+                </span>
+                Telegram-канал
+              </a>
+            </li>
+            <li>
+              <a href="mailto:algomathmd@gmail.com" class="flex items-center gap-3 text-white/80 hover:text-[var(--orange)] transition-colors">
+                <span class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
+                </span>
+                [Твоя Почта]
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p class="text-xs uppercase tracking-[0.14em] text-white/40 font-semibold mb-4">Разделы</p>
+          <ul class="space-y-3.5 text-sm text-white/70">
+            <li><a href="#about" class="hover:text-[var(--orange)] transition-colors">Обо мне</a></li>
+            <li><a href="#services" class="hover:text-[var(--orange)] transition-colors">Услуги</a></li>
+            <li><a href="#terms" class="hover:text-[var(--orange)] transition-colors">Условия и оплата</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="h-px bg-white/10 my-9"></div>
+    <p class="text-white/35 text-xs text-center">© 2026 Дмитрий · Репетитор по математике · г. Бельцы</p>
+  </div>
+</footer>
+
+<script>
+  const items = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  items.forEach(i => io.observe(i));
+</script>
+
+</body>
+</html>
