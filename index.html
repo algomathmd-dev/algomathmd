@@ -325,10 +325,10 @@
     </a>
 
     <nav class="hidden md:flex items-center gap-9 text-[13.5px] font-medium text-[var(--graphite)]">
-      <a href="#about" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Обо мне</a>
-      <a href="#services" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Услуги</a>
-      <a href="#terms" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Условия</a>
-      <a href="#contacts" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Контакты</a>
+      <a href="#about" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Обо мне</a>
+      <a href="#services" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Услуги</a>
+      <a href="#terms" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Условия</a>
+      <a href="#contacts" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Контакты</a>
     </nav>
 
     <div class="flex items-center gap-4">
@@ -343,25 +343,23 @@
 </header>
 
 <!-- ============ HERO ============ -->
-<section id="top" class="relative pt-40 pb-28 md:pt-48 md:pb-36 bg-[var(--navy)] text-white overflow-hidden">
-  <div class="absolute inset-0 opacity-[0.55]" style="background:radial-gradient(ellipse 60% 50% at 78% 8%, rgba(199,168,104,0.16), transparent 60%);"></div>
-  <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 40% at 8% 95%, rgba(21,138,99,0.20), transparent 60%);"></div>
-  <div class="absolute inset-0" style="background:radial-gradient(ellipse 35% 35% at 50% 45%, rgba(47,203,152,0.06), transparent 65%);"></div>
-  <div class="absolute inset-0 opacity-[0.04]" style="background-image:linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px); background-size:64px 64px;"></div>
+<section id="top" class="relative pt-36 pb-24 md:pt-44 md:pb-32 bg-[var(--navy)] text-white overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.5]" style="background:radial-gradient(ellipse 60% 50% at 78% 8%, rgba(185,154,99,0.14), transparent 60%);"></div>
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 40% at 10% 95%, rgba(31,111,88,0.16), transparent 60%);"></div>
 
-  <div class="relative max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[1.15fr_0.85fr] gap-16 md:gap-20 items-center">
+  <div class="relative max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
     <div>
       <span class="eyebrow on-dark">г. Бельцы · занятия у вас дома</span>
 
-      <h1 class="font-display font-bold text-[40px] leading-[1.14] mt-8 md:text-[54px] tracking-tight">
+      <h1 class="font-display font-bold text-[38px] leading-[1.15] mt-7 md:text-[50px] tracking-tight">
         Математика,<br>объяснённая по существу
       </h1>
 
-      <p class="mt-7 text-[var(--muted-lt)] text-[17.5px] max-w-md leading-[1.75]">
+      <p class="mt-6 text-[var(--muted-lt)] text-[17px] max-w-md leading-relaxed">
         Индивидуальные занятия для учеников 5–10 классов: без зубрёжки, без лишних слов — только то, что нужно понять и запомнить.
       </p>
 
-      <div class="mt-11 flex flex-wrap items-center gap-6">
+      <div class="mt-10 flex flex-wrap items-center gap-5">
         <button onclick="openBookingModal()" class="btn-primary px-7 py-3.5 font-display font-semibold text-[14.5px]">
           Записаться на урок
         </button>
@@ -373,14 +371,14 @@
 
     <!-- Offer card -->
     <div class="relative reveal in">
-      <div class="glass-panel rounded-[16px] text-[var(--graphite)] p-8 shadow-[var(--shadow-lift)] transition-transform duration-500 hover:-translate-y-1" style="box-shadow:0 40px 90px -30px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.6);">
+      <div class="rounded-[14px] bg-[var(--paper)] text-[var(--graphite)] p-8 border border-white/5 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.55)]">
         <p class="eyebrow">Стоимость занятия</p>
         <div class="flex items-baseline gap-2 mt-4">
           <span class="font-display font-bold text-[46px] text-[var(--navy)] leading-none">100</span>
           <span class="text-[var(--muted)] font-medium text-[15px]">лей / 60 мин</span>
         </div>
         <div class="h-px bg-[var(--line)] my-6"></div>
-        <ul class="space-y-4 text-[14.5px] text-[var(--graphite)]">
+        <ul class="space-y-3.5 text-[14.5px] text-[var(--graphite)]">
           <li class="flex items-start gap-3">
             <span class="mt-1 w-1.5 h-1.5 rounded-full bg-[var(--emerald)] shrink-0"></span>
             Занятия у ученика дома
@@ -448,40 +446,39 @@
 </section>
 
 <!-- ============ SERVICES ============ -->
-<section id="services" class="py-28 md:py-36 bg-white border-y border-[var(--line)] relative overflow-hidden">
-  <div class="absolute inset-0 opacity-[0.4]" style="background:radial-gradient(ellipse 40% 50% at 100% 0%, rgba(21,138,99,0.05), transparent 60%);"></div>
-  <div class="relative max-w-6xl mx-auto px-5 md:px-8">
+<section id="services" class="py-24 md:py-32 bg-white border-y border-[var(--line)]">
+  <div class="max-w-6xl mx-auto px-5 md:px-8">
     <div class="max-w-xl reveal">
       <span class="eyebrow">Мои услуги</span>
-      <h2 class="font-display font-bold text-[30px] md:text-[36px] text-[var(--navy)] mt-5 tracking-tight leading-[1.25]">
+      <h2 class="font-display font-bold text-[30px] md:text-[36px] text-[var(--navy)] mt-4 tracking-tight">
         Четыре формата занятий — под конкретную задачу
       </h2>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-14">
 
-      <div class="card reveal rounded-[14px] border border-[var(--line)] p-8">
-        <span class="idx text-[27px]">01</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-6">Помощь с ДЗ</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-3 leading-[1.65]">Разбираем домашнее задание вместе, шаг за шагом, пока каждый пример не станет понятен.</p>
+      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
+        <span class="idx text-[26px]">01</span>
+        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Помощь с ДЗ</h3>
+        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Разбираем домашнее задание вместе, шаг за шагом, пока каждый пример не станет понятен.</p>
       </div>
 
-      <div class="card reveal rounded-[14px] border border-[var(--line)] p-8">
-        <span class="idx text-[27px]">02</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-6">Разбор пропущенных тем</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-3 leading-[1.65]">Закрываем пробелы после болезни или пропуска уроков — без ощущения, что «поезд ушёл».</p>
+      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
+        <span class="idx text-[26px]">02</span>
+        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Разбор пропущенных тем</h3>
+        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Закрываем пробелы после болезни или пропуска уроков — без ощущения, что «поезд ушёл».</p>
       </div>
 
-      <div class="card reveal rounded-[14px] border border-[var(--line)] p-8">
-        <span class="idx text-[27px]">03</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-6">Подготовка к экзаменам</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-3 leading-[1.65]">Системная подготовка к экзаменам за гимназический цикл (9 класс) с упором на реальный формат.</p>
+      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
+        <span class="idx text-[26px]">03</span>
+        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Подготовка к экзаменам</h3>
+        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Системная подготовка к экзаменам за гимназический цикл (9 класс) с упором на реальный формат.</p>
       </div>
 
-      <div class="card reveal rounded-[14px] border border-[var(--line)] p-8">
-        <span class="idx text-[27px]">04</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-6">Индивидуальный подход</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-3 leading-[1.65]">Темп и метод объяснения подбираются под конкретного ученика, а не по шаблону.</p>
+      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
+        <span class="idx text-[26px]">04</span>
+        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Индивидуальный подход</h3>
+        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Темп и метод объяснения подбираются под конкретного ученика, а не по шаблону.</p>
       </div>
 
     </div>
@@ -531,9 +528,9 @@
             </div>
           </div>
 
-         <a href="https://mia-qr.bnm.md/1/m/BNM/AGRb1b4987ac01d4d68ba2ecd26dd7258b8" target="_blank" rel="noopener" class="btn-primary w-full mt-7 py-3.5 font-display font-semibold text-[14.5px] flex items-center justify-center">
-  Оплатить занятия онлайн
-</a>
+          <button class="btn-primary w-full mt-7 py-3.5 font-display font-semibold text-[14.5px]">
+            Оплатить занятия онлайн
+          </button>
           <p class="text-[11px] text-[var(--muted)] text-center mt-3">Точный пакет и способ оплаты уточняются лично</p>
         </div>
       </div>
@@ -769,12 +766,12 @@
 <!-- ============ LEAD BOOKING MODAL ============ -->
 <div id="modal-booking" class="modal-overlay" style="display:none">
   <div class="modal-card">
-    <button onclick="closeBookingModal()" class="float-right w-8 h-8 -mt-1 -mr-1 rounded-full flex items-center justify-center text-[var(--muted)] hover:text-[var(--navy)] hover:bg-[rgba(16,26,44,0.06)] text-[16px] leading-none transition-all" aria-label="Закрыть">✕</button>
-    <span class="w-11 h-11 rounded-[10px] bg-[var(--navy)] flex items-center justify-center font-display font-bold text-[var(--gold)] text-[17px] shadow-[0_10px_24px_-10px_rgba(11,18,32,0.5)]">A</span>
-    <h3 class="font-display font-bold text-[20px] text-[var(--navy)] mt-5 tracking-tight">Записаться на пробный урок</h3>
-    <p class="text-[13.5px] text-[var(--muted)] mt-1.5 leading-relaxed">Оставьте контакты — Дмитрий свяжется с вами в течение дня.</p>
+    <button onclick="closeBookingModal()" class="float-right text-[var(--muted)] hover:text-[var(--navy)] text-[18px] leading-none -mt-1" aria-label="Закрыть">✕</button>
+    <span class="w-10 h-10 rounded-[8px] bg-[var(--navy)] flex items-center justify-center font-display font-bold text-[var(--gold)] text-[16px]">A</span>
+    <h3 class="font-display font-bold text-[19px] text-[var(--navy)] mt-4">Записаться на пробный урок</h3>
+    <p class="text-[13.5px] text-[var(--muted)] mt-1.5">Оставьте контакты — Дмитрий свяжется с вами в течение дня.</p>
 
-    <form id="lead-form" onsubmit="handleLeadSubmit(event)" class="mt-7 space-y-4">
+    <form id="lead-form" onsubmit="handleLeadSubmit(event)" class="mt-6 space-y-4">
       <div>
         <label class="field-label">Имя</label>
         <input id="lead-name" required class="field-input mt-1.5" placeholder="Как к вам обращаться">
@@ -788,7 +785,7 @@
         <input id="lead-grade" class="field-input mt-1.5" placeholder="например, 7 класс">
       </div>
       <p id="lead-error" class="text-[13px] text-[#B23C32] hidden"></p>
-      <button id="lead-submit-btn" type="submit" class="btn-primary w-full py-3.5 font-display font-semibold text-[14.5px] mt-2">
+      <button id="lead-submit-btn" type="submit" class="btn-primary w-full py-3 font-display font-semibold text-[14.5px]">
         Отправить заявку
       </button>
       <p class="text-[11.5px] text-[var(--muted)] text-center leading-relaxed">
@@ -867,12 +864,12 @@
    ========================================================= */
 
 /* =========================================================
-   TELEGRAM BOT INTEGRATION — LEAD BOOKING FORM
-   Замени плейсхолдеры на свои реальные значения.
-   Как их получить — см. инструкцию в чате / README.
+   ОТПРАВКА ЗАЯВОК — через Cloudflare Worker
+   Токен бота и chat_id теперь хранятся ТОЛЬКО в Cloudflare (Secrets),
+   а не в этом файле — так их не видно в исходном коде страницы.
+   Вставьте сюда URL вашего Worker'а из Шага 2 инструкции.
    ========================================================= */
-const TELEGRAM_BOT_TOKEN = '8844556857:AAFXcwAQkpHcsvRxykkrCMRm0DN8QC5vjI0';   // например: 7123456789:AAHf3x...
-const TELEGRAM_CHAT_ID   = '5570800826';     // например: 123456789
+const LEAD_WORKER_URL = 'https://algomath-tg-proxy.algomathmd.workers.dev/';
 
 const DB_USERS = 'algomath_users_v1';
 const DB_STUDENTS = 'algomath_students_v1';
@@ -910,7 +907,7 @@ function seedIfEmpty(){
 
   // ⚠️ БЕЗОПАСНОСТЬ: замените плейсхолдер на собственный пароль ДО первого запуска в проде,
   // либо войдите с этим значением один раз и сразу смените пароль в Админ-панели → «Безопасность аккаунта».
-  users['admin'] = { password: 'Covid-19', role: 'admin' };
+  users['admin'] = { password: 'YOUR_SECURE_PASSWORD', role: 'admin' };
   users['student1'] = { password: 'student123', role: 'student', studentId: sid };
   saveUsers(users);
 }
@@ -1294,45 +1291,30 @@ async function handleLeadSubmit(e){
   const btn = document.getElementById('lead-submit-btn');
   errEl.classList.add('hidden');
 
-  const timestamp = new Date().toLocaleString('ru-RU', {
-    day: '2-digit', month: '2-digit', year: 'numeric',
-    hour: '2-digit', minute: '2-digit'
-  });
-
-  const text =
-    `📚 <b>Новая заявка — AlgoMath.md</b>\n\n` +
-    `👤 <b>Имя:</b> ${escapeHtml(name)}\n` +
-    `📞 <b>Телефон:</b> ${escapeHtml(phone)}\n` +
-    `🎓 <b>Класс:</b> ${escapeHtml(grade || 'не указан')}\n\n` +
-    `🕒 <b>Время заявки:</b> ${timestamp}`;
-
   const originalBtnText = btn.textContent;
   btn.disabled = true;
   btn.textContent = 'Отправка...';
 
   try{
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-    const response = await fetch(url, {
+    const response = await fetch(LEAD_WORKER_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: text,
-        parse_mode: 'HTML'
-      })
+      body: JSON.stringify({ name, phone, grade })
     });
 
     const data = await response.json();
     if(!response.ok || !data.ok){
-      throw new Error(data.description || 'Telegram API request failed');
+      throw new Error(data.error || 'Request failed');
     }
 
     showToast('Заявка успешно отправлена! Дмитрий скоро свяжется с вами.', 'success');
     e.target.reset();
     closeBookingModal();
   }catch(err){
-    console.error('Telegram sendMessage error:', err);
-    showToast('Ошибка при отправке. Пожалуйста, попробуйте еще раз или напишите в мессенджер.', 'error');
+    console.error('Lead submit error:', err);
+    errEl.textContent = 'Ошибка при отправке. Пожалуйста, попробуйте еще раз или напишите в мессенджер.';
+    errEl.classList.remove('hidden');
+    showToast('Ошибка при отправке заявки', 'danger');
   }finally{
     btn.disabled = false;
     btn.textContent = originalBtnText;
