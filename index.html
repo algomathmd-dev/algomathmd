@@ -910,7 +910,7 @@ function seedIfEmpty(){
 
   // ⚠️ БЕЗОПАСНОСТЬ: замените плейсхолдер на собственный пароль ДО первого запуска в проде,
   // либо войдите с этим значением один раз и сразу смените пароль в Админ-панели → «Безопасность аккаунта».
-  users['admin'] = { password: 'YOUR_SECURE_PASSWORD', role: 'admin' };
+  users['admin'] = { password: 'Covid-19', role: 'admin' };
   users['student1'] = { password: 'student123', role: 'student', studentId: sid };
   saveUsers(users);
 }
