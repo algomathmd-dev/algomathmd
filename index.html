@@ -609,7 +609,78 @@
 </footer>
 
 </div><!-- /view-landing -->
-
+<!-- ============ FIRST-RUN ADMIN SETUP ============ -->
+<div id="view-setup" class="view" style="display:none">
+  <div class="min-h-screen bg-[var(--navy)] flex items-center justify-center px-5 py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.5]" style="background:radial-gradient(ellipse 60% 50% at 78% 8%, rgba(185,154,99,0.14), transparent 60%);"></div>
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 40% at 10% 95%, rgba(31,111,88,0.16), transparent 60%);"></div>
+    <div class="relative w-full max-w-[420px]">
+      <div class="rounded-[14px] bg-[var(--paper)] p-8 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.55)]">
+        <span class="w-10 h-10 rounded-[8px] bg-[var(--navy)] flex items-center justify-center font-display font-bold text-[var(--gold)] text-[16px]">A</span>
+        <h1 class="font-display font-bold text-[22px] text-[var(--navy)] mt-5 tracking-tight">Первоначальная настройка</h1>
+        <p class="text-[13.5px] text-[var(--muted)] mt-1.5">Админ-аккаунт ещё не создан. Задайте логин и пароль — они сохранятся только в этом браузере.</p>
+        <form onsubmit="handleSetupAdmin(event)" class="mt-7 space-y-4">
+          <div>
+            <label class="field-label">Логин администратора</label>
+            <input id="setup-username" type="text" autocomplete="username" required class="field-input mt-1.5" placeholder="например, admin">
+          </div>
+          <div>
+            <label class="field-label">Пароль</label>
+            <input id="setup-password" type="password" autocomplete="new-password" required minlength="6" class="field-input mt-1.5" placeholder="минимум 6 символов">
+          </div>
+          <div>
+            <label class="field-label">Повторите пароль</label>
+            <input id="setup-password-confirm" type="password" autocomplete="new-password" required minlength="6" class="field-input mt-1.5">
+          </div>
+          <p id="setup-error" class="text-[13px] text-[#B23C32] hidden"></p>
+          <button type="submit" class="btn-primary w-full py-3 font-display font-semibold text-[14.5px]">Создать админ-аккаунт</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- ============ STUDENT SELF-REGISTRATION ============ -->
+<div id="view-register" class="view" style="display:none">
+  <div class="min-h-screen bg-[var(--navy)] flex items-center justify-center px-5 py-16 relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.5]" style="background:radial-gradient(ellipse 60% 50% at 78% 8%, rgba(185,154,99,0.14), transparent 60%);"></div>
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 40% at 10% 95%, rgba(31,111,88,0.16), transparent 60%);"></div>
+    <div class="relative w-full max-w-[420px]">
+      <button onclick="showView('login')" class="text-white/60 hover:text-white text-[13px] mb-8 flex items-center gap-2 transition-colors">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Назад ко входу
+      </button>
+      <div class="rounded-[14px] bg-[var(--paper)] p-8 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.55)]">
+        <span class="w-10 h-10 rounded-[8px] bg-[var(--navy)] flex items-center justify-center font-display font-bold text-[var(--gold)] text-[16px]">A</span>
+        <h1 class="font-display font-bold text-[22px] text-[var(--navy)] mt-5 tracking-tight">Регистрация ученика</h1>
+        <p class="text-[13.5px] text-[var(--muted)] mt-1.5">Создайте свой личный кабинет — Дмитрий увидит вашу заявку в админ-панели.</p>
+        <form onsubmit="handleRegister(event)" class="mt-7 space-y-4">
+          <div>
+            <label class="field-label">Имя</label>
+            <input id="reg-name" required class="field-input mt-1.5" placeholder="Как к вам обращаться">
+          </div>
+          <div>
+            <label class="field-label">Класс</label>
+            <input id="reg-grade" class="field-input mt-1.5" placeholder="например, 7 класс">
+          </div>
+          <div>
+            <label class="field-label">Контакт (телефон / Telegram)</label>
+            <input id="reg-contact" class="field-input mt-1.5" placeholder="+373 6X XXX XXX">
+          </div>
+          <div>
+            <label class="field-label">Логин</label>
+            <input id="reg-username" type="text" autocomplete="username" required class="field-input mt-1.5" placeholder="придумайте логин">
+          </div>
+          <div>
+            <label class="field-label">Пароль</label>
+            <input id="reg-password" type="password" autocomplete="new-password" required minlength="6" class="field-input mt-1.5" placeholder="минимум 6 символов">
+          </div>
+          <p id="register-error" class="text-[13px] text-[#B23C32] hidden"></p>
+          <button type="submit" class="btn-primary w-full py-3 font-display font-semibold text-[14.5px]">Создать аккаунт</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 <!-- ============ LOGIN VIEW ============ -->
 <div id="view-login" class="view" style="display:none">
   <div class="min-h-screen bg-[var(--navy)] flex items-center justify-center px-5 py-16 relative overflow-hidden">
@@ -638,6 +709,10 @@
           </div>
           <p id="login-error" class="text-[13px] text-[#B23C32] hidden"></p>
           <button type="submit" class="btn-primary w-full py-3 font-display font-semibold text-[14.5px]">Войти</button>
+        </form>
+        <p class="text-[13px] text-[var(--muted)] mt-5 text-center">
+          Ещё нет аккаунта? <a href="#" onclick="showView('register'); return false;" class="text-[var(--emerald)] font-medium hover:underline">Зарегистрироваться</a>
+        </p>
         </form>
       </div>
     </div>
@@ -961,7 +1036,81 @@ function logout(){
   clearSession();
   showView('landing');
 }
+function handleSetupAdmin(e){
+  e.preventDefault();
+  const username = document.getElementById('setup-username').value.trim();
+  const password = document.getElementById('setup-password').value;
+  const confirmVal = document.getElementById('setup-password-confirm').value;
+  const errEl = document.getElementById('setup-error');
+  errEl.classList.add('hidden');
 
+  if(password.length < 6){
+    errEl.textContent = 'Пароль должен быть не короче 6 символов.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  if(password !== confirmVal){
+    errEl.textContent = 'Пароли не совпадают.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  const users = loadUsers();
+  if(users[username]){
+    errEl.textContent = 'Этот логин уже занят, выберите другой.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  users[username] = { password, role: 'admin' };
+  saveUsers(users);
+  setSession({ username, role: 'admin', studentId: null });
+  showView('admin');
+  showToast('Админ-аккаунт создан', 'success');
+}
+
+function handleRegister(e){
+  e.preventDefault();
+  const name = document.getElementById('reg-name').value.trim();
+  const grade = document.getElementById('reg-grade').value.trim();
+  const contact = document.getElementById('reg-contact').value.trim();
+  const username = document.getElementById('reg-username').value.trim();
+  const password = document.getElementById('reg-password').value;
+  const errEl = document.getElementById('register-error');
+  errEl.classList.add('hidden');
+
+  if(password.length < 6){
+    errEl.textContent = 'Пароль должен быть не короче 6 символов.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  const users = loadUsers();
+  if(users[username]){
+    errEl.textContent = 'Этот логин уже занят, выберите другой.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  const id = uid();
+  const students = loadStudents();
+  students[id] = {
+    id, name, grade, contact,
+    paidLessons: 0,
+    leftLessons: 0,
+    source: 'self',
+    program: []
+  };
+  saveStudents(students);
+
+  users[username] = { password, role: 'student', studentId: id };
+  saveUsers(users);
+
+  setSession({ username, role: 'student', studentId: id });
+  e.target.reset();
+  showView('student');
+  showToast('Аккаунт создан! Добро пожаловать.', 'success');
+}
 function requireSessionOrRedirect(){
   const s = getSession();
   if(!s) { showView('login'); return null; }
@@ -1025,7 +1174,7 @@ function renderStudentList(){
     return `
       <div class="sidebar-item ${s.id === currentStudentId ? 'active' : ''}">
         <div class="flex-1 min-w-0 cursor-pointer" onclick="selectStudent('${s.id}')">
-          <p class="${nameClass} truncate" ${nameStyle}>${isLow ? '⚠ ' : ''}${escapeHtml(s.name)}</p>
+          <p class="${nameClass} truncate" ${nameStyle}>${isLow ? '⚠ ' : ''}${escapeHtml(s.name)}${s.source === 'self' ? ' <span class="badge badge-hw" style="font-size:9.5px;padding:1px 6px;vertical-align:middle">новая заявка</span>' : ''}</p>
           <p class="text-[11.5px] text-[var(--muted)] mt-0.5">${escapeHtml(s.grade || '')}${left !== null ? ' · осталось ' + left : ''}</p>
         </div>
         <div class="flex items-center gap-2 shrink-0">
@@ -1078,7 +1227,7 @@ function renderAdminDetail(id){
   detail.innerHTML = `
     <div class="flex items-start justify-between flex-wrap gap-4">
       <div>
-        <h2 class="font-display font-bold text-[20px] text-[var(--navy)]">${escapeHtml(st.name)}</h2>
+        <h2 class="font-display font-bold text-[20px] text-[var(--navy)]">${escapeHtml(st.name)} ${st.source === 'self' ? '<span class="badge badge-hw" style="vertical-align:middle">Самостоятельная регистрация</span>' : ''}</h2>
         <p class="text-[13px] text-[var(--muted)] mt-1">${escapeHtml(st.grade || '')} ${st.contact ? '· ' + escapeHtml(st.contact) : ''}</p>
       </div>
       <button onclick="deleteStudent('${st.id}')" class="btn-danger-ghost px-3.5 py-2 text-[12.5px] font-medium">Удалить ученика</button>
@@ -1527,6 +1676,7 @@ function formatDate(iso){
 
 seedIfEmpty();
 (function initialView(){
+  if(!hasAdmin()){ showView('setup'); return; }
   const s = getSession();
   if(s && s.role === 'admin'){ showView('admin'); }
   else if(s && s.role === 'student'){ showView('student'); }
