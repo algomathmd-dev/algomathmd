@@ -4,23 +4,34 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AlgoMath.md — репетитор по математике, Дмитрий · Бельцы</title>
+<meta name="description" content="Услуги индивидуального репетитора по математике в Бельцах для учеников 5–10 классов. Занятия у вас дома, подтягивание успеваемости, подготовка к экзаменам.">
+<meta name="keywords" content="репетитор по математике бельцы, уроки математики бельцы, подготовка к экзаменам математика бельцы, математика 9 класс бельцы">
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#101A2C;
-    --navy-2:#1B2740;
-    --graphite:#2B303B;
-    --cream:#F7F4EE;
+    --navy:#0B1220;
+    --navy-2:#152238;
+    --graphite:#242A35;
+    --cream:#F8F5EE;
     --paper:#FFFFFF;
-    --line:#E4E0D6;
-    --line-dark:rgba(255,255,255,0.12);
-    --emerald:#1F6F58;
-    --emerald-dark:#175243;
-    --gold:#B99A63;
-    --muted:#666E7A;
-    --muted-lt:rgba(255,255,255,0.62);
+    --line:#E6E0D2;
+    --line-dark:rgba(255,255,255,0.14);
+    --emerald:#158A63;
+    --emerald-dark:#0D5F44;
+    --emerald-light:#2FCB98;
+    --gold:#C7A868;
+    --gold-light:#E8CD94;
+    --muted:#5A6270;
+    --muted-lt:rgba(255,255,255,0.68);
+    --glass-light: rgba(255,255,255,0.7);
+    --glass-border-light: rgba(255,255,255,0.55);
+    --glass-dark: rgba(255,255,255,0.055);
+    --glass-border-dark: rgba(255,255,255,0.14);
+    --shadow-soft: 0 20px 44px -22px rgba(11,18,32,0.35);
+    --shadow-lift: 0 32px 64px -26px rgba(11,18,32,0.45);
+    --ease-spring: cubic-bezier(.22,1,.36,1);
   }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -52,35 +63,64 @@
   .eyebrow.on-dark{ color:var(--gold); }
   .eyebrow.on-dark::before{ background:var(--gold); }
 
-  .btn-primary{
+  .nav-link{
+    position:relative;
+    padding-bottom:3px;
+  }
+  .nav-link::after{
+    content:"";
+    position:absolute; left:0; bottom:-2px; width:0; height:1.5px;
     background:var(--emerald);
+    transition:width .3s var(--ease-spring);
+  }
+  .nav-link:hover::after{ width:100%; }
+
+  .btn-primary{
+    background:linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 100%);
     color:#fff;
-    border-radius:9px;
-    transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
-    box-shadow:0 10px 24px -12px rgba(31,111,88,0.55);
+    border-radius:10px;
+    transition: transform .28s var(--ease-spring), box-shadow .3s ease, background .3s ease;
+    box-shadow:0 14px 30px -14px rgba(21,138,99,0.55);
+    will-change: transform;
   }
   .btn-primary:hover{
-    background:var(--emerald-dark);
-    transform:translateY(-1px);
+    background:linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald) 100%);
+    transform:translateY(-2px) scale(1.015);
+    box-shadow:0 20px 40px -14px rgba(21,138,99,0.6), 0 0 0 1px rgba(47,203,152,0.25);
   }
+  .btn-primary:active{ transform:translateY(0) scale(0.98); }
   .btn-outline-dark{
     border:1px solid var(--line-dark);
     color:#fff;
-    border-radius:9px;
-    transition: all .18s ease;
+    border-radius:10px;
+    transition: all .28s var(--ease-spring);
   }
   .btn-outline-dark:hover{
-    background:rgba(255,255,255,0.06);
-    border-color:rgba(255,255,255,0.3);
+    background:rgba(255,255,255,0.07);
+    border-color:rgba(199,168,104,0.55);
+    box-shadow:0 14px 30px -18px rgba(0,0,0,0.5), 0 0 0 1px rgba(199,168,104,0.18);
+    transform:translateY(-2px);
   }
+  .btn-outline-dark:active{ transform:translateY(0); }
 
   .card{
-    transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    position:relative;
+    background:var(--paper);
+    isolation:isolate;
+    overflow:hidden;
+    transition: border-color .3s ease, box-shadow .35s ease, transform .35s var(--ease-spring);
   }
+  .card::before{
+    content:"";
+    position:absolute; inset:0; z-index:-1;
+    background:radial-gradient(circle at 18% -10%, rgba(21,138,99,0.10), transparent 60%);
+    opacity:0; transition:opacity .35s ease;
+  }
+  .card:hover::before{ opacity:1; }
   .card:hover{
-    border-color:rgba(16,26,44,0.18);
-    box-shadow:0 24px 48px -28px rgba(16,26,44,0.28);
-    transform:translateY(-3px);
+    border-color:rgba(21,138,99,0.4);
+    box-shadow:var(--shadow-lift);
+    transform:translateY(-5px);
   }
 
   .reveal{
@@ -100,6 +140,21 @@
     font-weight:700;
     color:var(--line);
     -webkit-text-stroke: 1px rgba(16,26,44,0.14);
+    transition: color .35s ease, -webkit-text-stroke-color .35s ease;
+  }
+  .card:hover .idx{ color:rgba(21,138,99,0.18); -webkit-text-stroke-color:rgba(21,138,99,0.3); }
+
+  .glass-panel{
+    background: var(--glass-light);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border:1px solid var(--glass-border-light);
+  }
+  .glass-panel-dark{
+    background: var(--glass-dark);
+    backdrop-filter: blur(22px) saturate(160%);
+    -webkit-backdrop-filter: blur(22px) saturate(160%);
+    border:1px solid var(--glass-border-dark);
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -128,16 +183,17 @@
     width:100%;
     border:1px solid var(--line);
     background:#fff;
-    border-radius:8px;
+    border-radius:9px;
     padding:10px 12px;
     font-size:14px;
     color:var(--graphite);
-    transition:border-color .15s ease, box-shadow .15s ease;
+    transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
   }
+  .field-input:hover{ border-color:rgba(21,138,99,0.4); }
   .field-input:focus{
     outline:none;
     border-color:var(--emerald);
-    box-shadow:0 0 0 3px rgba(31,111,88,0.12);
+    box-shadow:0 0 0 4px rgba(21,138,99,0.14);
   }
   .field-input.on-dark{
     background:rgba(255,255,255,0.06);
@@ -170,12 +226,12 @@
     border-radius:9px;
     cursor:pointer;
     border:1px solid transparent;
-    transition:all .15s ease;
+    transition:all .22s var(--ease-spring);
   }
-  .sidebar-item:hover{ background:rgba(16,26,44,0.04); }
+  .sidebar-item:hover{ background:rgba(16,26,44,0.045); transform:translateX(2px); }
   .sidebar-item.active{
-    background:rgba(31,111,88,0.08);
-    border-color:rgba(31,111,88,0.25);
+    background:rgba(21,138,99,0.08);
+    border-color:rgba(21,138,99,0.28);
   }
 
   .badge{
@@ -209,13 +265,25 @@
   }
   .dash-table tr:last-child td{ border-bottom:none; }
 
+  @keyframes overlayIn{ from{ opacity:0; } to{ opacity:1; } }
+  @keyframes modalIn{
+    from{ opacity:0; transform:translateY(20px) scale(.96); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
   .modal-overlay{
-    position:fixed; inset:0; background:rgba(16,26,44,0.55);
+    position:fixed; inset:0; background:rgba(11,18,32,0.6);
+    backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
     display:flex; align-items:center; justify-content:center; z-index:100; padding:20px;
+    animation: overlayIn .25s ease;
   }
   .modal-card{
-    background:#fff; border-radius:14px; padding:28px; width:100%; max-width:440px;
-    box-shadow:0 40px 80px -30px rgba(0,0,0,0.4);
+    background: var(--glass-light);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border:1px solid var(--glass-border-light);
+    border-radius:16px; padding:32px; width:100%; max-width:440px;
+    box-shadow: var(--shadow-lift), inset 0 1px 0 rgba(255,255,255,0.5);
+    animation: modalIn .4s var(--ease-spring);
   }
 
   .toast{
@@ -257,10 +325,10 @@
     </a>
 
     <nav class="hidden md:flex items-center gap-9 text-[13.5px] font-medium text-[var(--graphite)]">
-      <a href="#about" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Обо мне</a>
-      <a href="#services" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Услуги</a>
-      <a href="#terms" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Условия</a>
-      <a href="#contacts" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Контакты</a>
+      <a href="#about" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Обо мне</a>
+      <a href="#services" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Услуги</a>
+      <a href="#terms" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Условия</a>
+      <a href="#contacts" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Контакты</a>
     </nav>
 
     <div class="flex items-center gap-4">
@@ -275,23 +343,25 @@
 </header>
 
 <!-- ============ HERO ============ -->
-<section id="top" class="relative pt-36 pb-24 md:pt-44 md:pb-32 bg-[var(--navy)] text-white overflow-hidden">
-  <div class="absolute inset-0 opacity-[0.5]" style="background:radial-gradient(ellipse 60% 50% at 78% 8%, rgba(185,154,99,0.14), transparent 60%);"></div>
-  <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 40% at 10% 95%, rgba(31,111,88,0.16), transparent 60%);"></div>
+<section id="top" class="relative pt-40 pb-28 md:pt-48 md:pb-36 bg-[var(--navy)] text-white overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.55]" style="background:radial-gradient(ellipse 60% 50% at 78% 8%, rgba(199,168,104,0.16), transparent 60%);"></div>
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 40% at 8% 95%, rgba(21,138,99,0.20), transparent 60%);"></div>
+  <div class="absolute inset-0" style="background:radial-gradient(ellipse 35% 35% at 50% 45%, rgba(47,203,152,0.06), transparent 65%);"></div>
+  <div class="absolute inset-0 opacity-[0.04]" style="background-image:linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px); background-size:64px 64px;"></div>
 
-  <div class="relative max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
+  <div class="relative max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[1.15fr_0.85fr] gap-16 md:gap-20 items-center">
     <div>
       <span class="eyebrow on-dark">г. Бельцы · занятия у вас дома</span>
 
-      <h1 class="font-display font-bold text-[38px] leading-[1.15] mt-7 md:text-[50px] tracking-tight">
+      <h1 class="font-display font-bold text-[40px] leading-[1.14] mt-8 md:text-[54px] tracking-tight">
         Математика,<br>объяснённая по существу
       </h1>
 
-      <p class="mt-6 text-[var(--muted-lt)] text-[17px] max-w-md leading-relaxed">
+      <p class="mt-7 text-[var(--muted-lt)] text-[17.5px] max-w-md leading-[1.75]">
         Индивидуальные занятия для учеников 5–10 классов: без зубрёжки, без лишних слов — только то, что нужно понять и запомнить.
       </p>
 
-      <div class="mt-10 flex flex-wrap items-center gap-5">
+      <div class="mt-11 flex flex-wrap items-center gap-6">
         <button onclick="openBookingModal()" class="btn-primary px-7 py-3.5 font-display font-semibold text-[14.5px]">
           Записаться на урок
         </button>
@@ -303,14 +373,14 @@
 
     <!-- Offer card -->
     <div class="relative reveal in">
-      <div class="rounded-[14px] bg-[var(--paper)] text-[var(--graphite)] p-8 border border-white/5 shadow-[0_40px_80px_-30px_rgba(0,0,0,0.55)]">
+      <div class="glass-panel rounded-[16px] text-[var(--graphite)] p-8 shadow-[var(--shadow-lift)] transition-transform duration-500 hover:-translate-y-1" style="box-shadow:0 40px 90px -30px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.6);">
         <p class="eyebrow">Стоимость занятия</p>
         <div class="flex items-baseline gap-2 mt-4">
           <span class="font-display font-bold text-[46px] text-[var(--navy)] leading-none">100</span>
           <span class="text-[var(--muted)] font-medium text-[15px]">лей / 60 мин</span>
         </div>
         <div class="h-px bg-[var(--line)] my-6"></div>
-        <ul class="space-y-3.5 text-[14.5px] text-[var(--graphite)]">
+        <ul class="space-y-4 text-[14.5px] text-[var(--graphite)]">
           <li class="flex items-start gap-3">
             <span class="mt-1 w-1.5 h-1.5 rounded-full bg-[var(--emerald)] shrink-0"></span>
             Занятия у ученика дома
@@ -378,39 +448,40 @@
 </section>
 
 <!-- ============ SERVICES ============ -->
-<section id="services" class="py-24 md:py-32 bg-white border-y border-[var(--line)]">
-  <div class="max-w-6xl mx-auto px-5 md:px-8">
+<section id="services" class="py-28 md:py-36 bg-white border-y border-[var(--line)] relative overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.4]" style="background:radial-gradient(ellipse 40% 50% at 100% 0%, rgba(21,138,99,0.05), transparent 60%);"></div>
+  <div class="relative max-w-6xl mx-auto px-5 md:px-8">
     <div class="max-w-xl reveal">
       <span class="eyebrow">Мои услуги</span>
-      <h2 class="font-display font-bold text-[30px] md:text-[36px] text-[var(--navy)] mt-4 tracking-tight">
+      <h2 class="font-display font-bold text-[30px] md:text-[36px] text-[var(--navy)] mt-5 tracking-tight leading-[1.25]">
         Четыре формата занятий — под конкретную задачу
       </h2>
     </div>
 
-    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-14">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-16">
 
-      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">01</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Помощь с ДЗ</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Разбираем домашнее задание вместе, шаг за шагом, пока каждый пример не станет понятен.</p>
+      <div class="card reveal rounded-[14px] border border-[var(--line)] p-8">
+        <span class="idx text-[27px]">01</span>
+        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-6">Помощь с ДЗ</h3>
+        <p class="text-[14px] text-[var(--muted)] mt-3 leading-[1.65]">Разбираем домашнее задание вместе, шаг за шагом, пока каждый пример не станет понятен.</p>
       </div>
 
-      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">02</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Разбор пропущенных тем</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Закрываем пробелы после болезни или пропуска уроков — без ощущения, что «поезд ушёл».</p>
+      <div class="card reveal rounded-[14px] border border-[var(--line)] p-8">
+        <span class="idx text-[27px]">02</span>
+        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-6">Разбор пропущенных тем</h3>
+        <p class="text-[14px] text-[var(--muted)] mt-3 leading-[1.65]">Закрываем пробелы после болезни или пропуска уроков — без ощущения, что «поезд ушёл».</p>
       </div>
 
-      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">03</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Подготовка к экзаменам</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Системная подготовка к экзаменам за гимназический цикл (9 класс) с упором на реальный формат.</p>
+      <div class="card reveal rounded-[14px] border border-[var(--line)] p-8">
+        <span class="idx text-[27px]">03</span>
+        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-6">Подготовка к экзаменам</h3>
+        <p class="text-[14px] text-[var(--muted)] mt-3 leading-[1.65]">Системная подготовка к экзаменам за гимназический цикл (9 класс) с упором на реальный формат.</p>
       </div>
 
-      <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">04</span>
-        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Индивидуальный подход</h3>
-        <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Темп и метод объяснения подбираются под конкретного ученика, а не по шаблону.</p>
+      <div class="card reveal rounded-[14px] border border-[var(--line)] p-8">
+        <span class="idx text-[27px]">04</span>
+        <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-6">Индивидуальный подход</h3>
+        <p class="text-[14px] text-[var(--muted)] mt-3 leading-[1.65]">Темп и метод объяснения подбираются под конкретного ученика, а не по шаблону.</p>
       </div>
 
     </div>
@@ -572,12 +643,6 @@
           <button type="submit" class="btn-primary w-full py-3 font-display font-semibold text-[14.5px]">Войти</button>
         </form>
       </div>
-
-      <div class="mt-5 rounded-[12px] border border-white/15 bg-white/5 p-4 text-[12.5px] text-white/60 leading-relaxed">
-        <p class="text-white/80 font-medium mb-1">Демо-доступ для проверки:</p>
-        Админ — <span class="text-white/85">admin / admin123</span><br>
-        Ученик — <span class="text-white/85">student1 / student123</span>
-      </div>
     </div>
   </div>
 </div>
@@ -648,6 +713,32 @@
           <input id="import-file-input" type="file" accept="application/json" class="hidden" onchange="importDatabase(event)">
         </div>
       </div>
+
+      <div class="rounded-[12px] border border-[var(--line)] bg-white p-7 mt-8">
+        <span class="eyebrow">Безопасность аккаунта</span>
+        <h3 class="font-display font-bold text-[18px] text-[var(--navy)] mt-3">Сменить пароль администратора</h3>
+        <p class="text-[13.5px] text-[var(--muted)] mt-2 max-w-lg leading-relaxed">
+          Пароль хранится только в этом браузере. Меняйте его сразу после первого входа и никому не сообщайте.
+        </p>
+        <form onsubmit="handleChangeAdminPassword(event)" class="mt-5 grid sm:grid-cols-3 gap-3 max-w-2xl items-end">
+          <div>
+            <label class="field-label">Текущий пароль</label>
+            <input id="admin-pass-current" type="password" required autocomplete="current-password" class="field-input mt-1.5">
+          </div>
+          <div>
+            <label class="field-label">Новый пароль</label>
+            <input id="admin-pass-new" type="password" required minlength="6" autocomplete="new-password" class="field-input mt-1.5">
+          </div>
+          <div>
+            <label class="field-label">Повторите пароль</label>
+            <input id="admin-pass-confirm" type="password" required minlength="6" autocomplete="new-password" class="field-input mt-1.5">
+          </div>
+          <div class="sm:col-span-3">
+            <p id="admin-pass-error" class="text-[13px] text-[#B23C32] hidden mb-3"></p>
+            <button type="submit" class="btn-primary px-5 py-2.5 text-[13.5px] font-display font-semibold">Обновить пароль</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -678,12 +769,12 @@
 <!-- ============ LEAD BOOKING MODAL ============ -->
 <div id="modal-booking" class="modal-overlay" style="display:none">
   <div class="modal-card">
-    <button onclick="closeBookingModal()" class="float-right text-[var(--muted)] hover:text-[var(--navy)] text-[18px] leading-none -mt-1" aria-label="Закрыть">✕</button>
-    <span class="w-10 h-10 rounded-[8px] bg-[var(--navy)] flex items-center justify-center font-display font-bold text-[var(--gold)] text-[16px]">A</span>
-    <h3 class="font-display font-bold text-[19px] text-[var(--navy)] mt-4">Записаться на пробный урок</h3>
-    <p class="text-[13.5px] text-[var(--muted)] mt-1.5">Оставьте контакты — Дмитрий свяжется с вами в течение дня.</p>
+    <button onclick="closeBookingModal()" class="float-right w-8 h-8 -mt-1 -mr-1 rounded-full flex items-center justify-center text-[var(--muted)] hover:text-[var(--navy)] hover:bg-[rgba(16,26,44,0.06)] text-[16px] leading-none transition-all" aria-label="Закрыть">✕</button>
+    <span class="w-11 h-11 rounded-[10px] bg-[var(--navy)] flex items-center justify-center font-display font-bold text-[var(--gold)] text-[17px] shadow-[0_10px_24px_-10px_rgba(11,18,32,0.5)]">A</span>
+    <h3 class="font-display font-bold text-[20px] text-[var(--navy)] mt-5 tracking-tight">Записаться на пробный урок</h3>
+    <p class="text-[13.5px] text-[var(--muted)] mt-1.5 leading-relaxed">Оставьте контакты — Дмитрий свяжется с вами в течение дня.</p>
 
-    <form id="lead-form" onsubmit="handleLeadSubmit(event)" class="mt-6 space-y-4">
+    <form id="lead-form" onsubmit="handleLeadSubmit(event)" class="mt-7 space-y-4">
       <div>
         <label class="field-label">Имя</label>
         <input id="lead-name" required class="field-input mt-1.5" placeholder="Как к вам обращаться">
@@ -697,7 +788,7 @@
         <input id="lead-grade" class="field-input mt-1.5" placeholder="например, 7 класс">
       </div>
       <p id="lead-error" class="text-[13px] text-[#B23C32] hidden"></p>
-      <button id="lead-submit-btn" type="submit" class="btn-primary w-full py-3 font-display font-semibold text-[14.5px]">
+      <button id="lead-submit-btn" type="submit" class="btn-primary w-full py-3.5 font-display font-semibold text-[14.5px] mt-2">
         Отправить заявку
       </button>
       <p class="text-[11.5px] text-[var(--muted)] text-center leading-relaxed">
@@ -817,7 +908,9 @@ function seedIfEmpty(){
   };
   saveStudents(students);
 
-  users['admin'] = { password: 'admin123', role: 'admin' };
+  // ⚠️ БЕЗОПАСНОСТЬ: замените плейсхолдер на собственный пароль ДО первого запуска в проде,
+  // либо войдите с этим значением один раз и сразу смените пароль в Админ-панели → «Безопасность аккаунта».
+  users['admin'] = { password: 'YOUR_SECURE_PASSWORD', role: 'admin' };
   users['student1'] = { password: 'student123', role: 'student', studentId: sid };
   saveUsers(users);
 }
@@ -1145,6 +1238,42 @@ function deleteStudent(id){
   renderStudentList();
   renderAdminStats();
   showToast('Ученик удалён', 'warning');
+}
+
+function handleChangeAdminPassword(e){
+  e.preventDefault();
+  const s = getSession();
+  if(!s || s.role !== 'admin') return;
+
+  const current = document.getElementById('admin-pass-current').value;
+  const next = document.getElementById('admin-pass-new').value;
+  const confirmVal = document.getElementById('admin-pass-confirm').value;
+  const errEl = document.getElementById('admin-pass-error');
+  errEl.classList.add('hidden');
+
+  const users = loadUsers();
+  const user = users[s.username];
+
+  if(!user || user.password !== current){
+    errEl.textContent = 'Текущий пароль указан неверно.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  if(next.length < 6){
+    errEl.textContent = 'Новый пароль должен быть не короче 6 символов.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+  if(next !== confirmVal){
+    errEl.textContent = 'Новый пароль и подтверждение не совпадают.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  user.password = next;
+  saveUsers(users);
+  e.target.reset();
+  showToast('Пароль администратора обновлён', 'success');
 }
 
 /* ---------------- LEAD BOOKING MODAL (Telegram) ---------------- */
