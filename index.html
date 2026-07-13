@@ -1693,11 +1693,22 @@ function formatDate(iso){
 
 seedIfEmpty();
 (function initialView(){
-  if(!hasAdmin()){ showView('setup'); return; }
+  // Обычные посетители всегда видят лендинг — никаких блокирующих экранов.
   const s = getSession();
-  if(s && s.role === 'admin'){ showView('admin'); }
-  else if(s && s.role === 'student'){ showView('student'); }
-  else { showView('landing'); }
+  if(s && s.role === 'admin'){ showView('admin'); return; }
+  if(s && s.role === 'student'){ showView('student'); return; }
+
+  // Секретный вход для владельца сайта: открой сайт с #admin в конце ссылки,
+  // например https://algomath.md/#admin
+  // Если админ-аккаунт ещё не создан — покажется форма первоначальной настройки.
+  // Если уже создан — обычная форма входа.
+  const hash = window.location.hash.replace('#', '');
+  if(hash === 'admin'){
+    showView(hasAdmin() ? 'login' : 'setup');
+    return;
+  }
+
+  showView('landing');
 })();
 </script>
 
