@@ -1447,12 +1447,8 @@ function openBookingModal(){
 }
 function closeBookingModal(){ document.getElementById('modal-booking').style.display = 'none'; }
 
-// Убери эти строки полностью — токен на сайте больше не нужен:
-// const TELEGRAM_BOT_TOKEN = '...';
-// const TELEGRAM_CHAT_ID = '...';
-
-// Вставь адрес своего Worker'а сюда:
-const LEAD_WORKER_URL = 'https://algomath-tg-proxy.algomathmd.workers.dev/';
+// Токен бота и chat_id хранятся ТОЛЬКО в Cloudflare (Secrets), не в этом файле.
+// URL Worker'а уже объявлен один раз в начале файла (переменная LEAD_WORKER_URL).
 
 async function handleLeadSubmit(e){
   e.preventDefault();
