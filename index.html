@@ -33,7 +33,7 @@
     --emerald-light:#2FD1C9;
     --gold:#3FC7D6;
     --gold-light:#8CE4EA;
-    --muted:#57626D;
+    --muted:#4B5560;
     --muted-lt:rgba(255,255,255,0.68);
     --glass-light: rgba(255,255,255,0.7);
     --glass-border-light: rgba(255,255,255,0.55);
@@ -84,6 +84,8 @@
     transition:width .3s var(--ease-spring);
   }
   .nav-link:hover::after{ width:100%; }
+  .nav-link.active{ color:var(--emerald); }
+  .nav-link.active::after{ width:100%; }
 
   .btn-primary{
     background:linear-gradient(135deg, var(--emerald) 0%, var(--emerald-dark) 100%);
@@ -324,6 +326,102 @@
       linear-gradient(90deg, rgba(255,255,255,0.55) 1px, transparent 1px);
     background-size: 34px 34px;
   }
+
+  /* ============ ANIMATED BACKGROUND FORMULAS ============ */
+  .formula-layer{
+    position:absolute; inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+  }
+  .formula{
+    position:absolute;
+    font-family:'Manrope',sans-serif;
+    font-weight:700;
+    font-style:italic;
+    user-select:none;
+    white-space:nowrap;
+    animation: formulaDrift ease-in-out infinite;
+    will-change: transform, opacity;
+  }
+  .formula.on-dark{ color:#fff; }
+  .formula.on-light{ color:var(--navy); }
+  .formula.accent{ color:var(--gold); }
+
+  @keyframes formulaDrift{
+    0%   { transform: translateY(0) rotate(var(--rot, 0deg)); opacity: var(--op, 0.08); }
+    50%  { transform: translateY(-22px) rotate(calc(var(--rot, 0deg) + 3deg)); opacity: calc(var(--op, 0.08) + 0.05); }
+    100% { transform: translateY(0) rotate(var(--rot, 0deg)); opacity: var(--op, 0.08); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .formula{ animation:none !important; }
+  }
+  @media (max-width: 640px){
+    .formula{ display:none; }
+    .formula:nth-child(-n+5){ display:block; }
+  }
+
+  /* ============ FLOATING CONTACT WIDGET ============ */
+  .contact-fab-wrap{
+    position:fixed; right:20px; bottom:20px; z-index:90;
+    display:flex; flex-direction:column; align-items:flex-end; gap:10px;
+  }
+  .contact-fab-item{
+    display:flex; align-items:center; gap:8px;
+    background:var(--navy); color:#fff;
+    border-radius:999px; padding:9px 16px 9px 12px;
+    font-size:13px; font-weight:600; font-family:'Manrope',sans-serif;
+    box-shadow:var(--shadow-soft);
+    opacity:0; transform:translateY(8px) scale(0.94);
+    pointer-events:none;
+    transition:opacity .22s var(--ease-spring), transform .22s var(--ease-spring);
+    white-space:nowrap;
+  }
+  .contact-fab-item svg{ flex-shrink:0; }
+  .contact-fab-item:hover{ background:var(--emerald-dark); }
+  .contact-fab-wrap.open .contact-fab-item{
+    opacity:1; transform:translateY(0) scale(1); pointer-events:auto;
+  }
+  .contact-fab-main{
+    width:56px; height:56px; border-radius:999px;
+    background:linear-gradient(135deg, var(--emerald-light) 0%, var(--emerald) 100%);
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 18px 34px -12px rgba(14,124,147,0.6);
+    transition:transform .28s var(--ease-spring), box-shadow .28s ease;
+    cursor:pointer; border:none;
+  }
+  .contact-fab-main:hover{ transform:scale(1.06); }
+  .contact-fab-main svg{ transition:transform .25s ease; }
+  .contact-fab-wrap.open .contact-fab-main svg{ transform:rotate(135deg); }
+
+  /* ============ SCROLL TO TOP ============ */
+  .scroll-top-btn{
+    position:fixed; left:20px; bottom:20px; z-index:90;
+    width:44px; height:44px; border-radius:999px;
+    background:#fff; color:var(--navy);
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:var(--shadow-soft);
+    opacity:0; pointer-events:none; transform:translateY(8px);
+    transition:opacity .25s ease, transform .25s ease, border-color .2s ease, color .2s ease;
+  }
+  .scroll-top-btn.show{ opacity:1; pointer-events:auto; transform:translateY(0); }
+  .scroll-top-btn:hover{ border-color:var(--emerald); color:var(--emerald); }
+
+  /* ============ STATS STRIP ============ */
+  .stat-tile{
+    border:1px solid var(--line);
+    background:#fff;
+    border-radius:12px;
+    padding:20px 18px;
+    transition: border-color .3s ease, box-shadow .3s ease, transform .3s var(--ease-spring);
+  }
+  .stat-tile:hover{
+    border-color:rgba(14,124,147,0.4);
+    box-shadow:var(--shadow-soft);
+    transform:translateY(-3px);
+  }
 </style>
 </head>
 <body class="antialiased">
@@ -342,10 +440,10 @@
     </a>
 
     <nav class="hidden md:flex items-center gap-9 text-[13.5px] font-medium text-[var(--graphite)]">
-      <a href="#about" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Обо мне</a>
-      <a href="#services" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Услуги</a>
-      <a href="#terms" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Условия</a>
-      <a href="#contacts" onclick="showView('landing')" class="hover:text-[var(--emerald)] transition-colors">Контакты</a>
+      <a href="#about" data-nav-target="about" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Обо мне</a>
+      <a href="#services" data-nav-target="services" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Услуги</a>
+      <a href="#terms" data-nav-target="terms" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Условия</a>
+      <a href="#contacts" data-nav-target="contacts" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Контакты</a>
     </nav>
 
     <div class="flex items-center gap-4">
@@ -364,8 +462,9 @@
   <div class="absolute inset-0 grid-paper opacity-[0.035]"></div>
   <div class="absolute inset-0 opacity-[0.5]" style="background:radial-gradient(ellipse 60% 50% at 78% 8%, rgba(63,199,214,0.14), transparent 60%);"></div>
   <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 40% at 10% 95%, rgba(14,124,147,0.16), transparent 60%);"></div>
+  <div class="formula-layer" id="formulas-hero"></div>
 
-  <div class="relative max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
+  <div class="relative z-10 max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[1.15fr_0.85fr] gap-16 items-center">
     <div>
       <span class="eyebrow on-dark">г. Бельцы · занятия у вас дома</span>
 
@@ -377,12 +476,31 @@
         Индивидуальные занятия для учеников 5–10 классов: без зубрёжки, без лишних слов — только то, что нужно понять и запомнить.
       </p>
 
-      <div class="mt-10 flex flex-wrap items-center gap-5">
+      <div class="mt-10 flex flex-wrap items-center gap-4">
         <button onclick="openBookingModal()" class="btn-primary px-7 py-3.5 font-display font-semibold text-[14.5px]">
           Записаться на урок
         </button>
-        <div class="text-[14px] text-[var(--muted-lt)] pl-1 border-l border-white/15">
-          <span class="pl-4 text-white font-display font-semibold text-[17px]">100 лей</span> / час · гибкий график
+        <a href="tel:+37362074442" class="btn-outline-dark px-6 py-3.5 font-display font-semibold text-[14.5px] inline-flex items-center gap-2">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg>
+          Позвонить
+        </a>
+      </div>
+
+      <div class="mt-8 flex flex-wrap items-center gap-x-7 gap-y-3 text-[13px] text-[var(--muted-lt)]">
+        <div class="flex items-center gap-2">
+          <span class="font-display font-bold text-white text-[17px]">100 лей</span> / час
+        </div>
+        <div class="w-px h-4 bg-white/15 hidden sm:block"></div>
+        <div class="flex items-center gap-2">
+          <span class="font-display font-bold text-white text-[17px]">5–10</span> классы
+        </div>
+        <div class="w-px h-4 bg-white/15 hidden sm:block"></div>
+        <div class="flex items-center gap-2">
+          <span class="font-display font-bold text-white text-[17px]">30</span> примеров на тему
+        </div>
+        <div class="w-px h-4 bg-white/15 hidden sm:block"></div>
+        <div class="flex items-center gap-2">
+          <span class="font-display font-bold text-white text-[17px]">Гибкий</span> график
         </div>
       </div>
     </div>
@@ -416,8 +534,9 @@
 </section>
 
 <!-- ============ ABOUT ============ -->
-<section id="about" class="py-24 md:py-32 bg-[var(--cream)]">
-  <div class="max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[0.78fr_1.22fr] gap-14 md:gap-20 items-center">
+<section id="about" class="relative py-24 md:py-32 bg-[var(--cream)] overflow-hidden">
+  <div class="formula-layer" id="formulas-about"></div>
+  <div class="relative z-10 max-w-6xl mx-auto px-5 md:px-8 grid md:grid-cols-[0.78fr_1.22fr] gap-14 md:gap-20 items-center">
 
     <!-- Photo placeholder -->
     <div class="reveal">
@@ -449,14 +568,22 @@
 Школьная программа перестает быть проблемой, когда вместо зазубренных правил у тебя есть четкий навык, отработанный на практике. Записывайтесь на занятия, и мы разберем любую сложную тему до автоматизма!
       </p>
 
-      <div class="mt-9 grid grid-cols-2 gap-4 max-w-sm">
-        <div class="rounded-[10px] border border-[var(--line)] bg-white p-5">
+      <div class="mt-9 grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="stat-tile">
           <p class="font-display font-bold text-[22px] text-[var(--navy)]">5–10</p>
           <p class="text-[12.5px] text-[var(--muted)] mt-1">классы, с которыми работаю</p>
         </div>
-        <div class="rounded-[10px] border border-[var(--line)] bg-white p-5">
+        <div class="stat-tile">
           <p class="font-display font-bold text-[22px] text-[var(--navy)]">У вас</p>
           <p class="text-[12.5px] text-[var(--muted)] mt-1">дома, в удобное время</p>
+        </div>
+        <div class="stat-tile">
+          <p class="font-display font-bold text-[22px] text-[var(--navy)]">30</p>
+          <p class="text-[12.5px] text-[var(--muted)] mt-1">примеров на каждую подтему</p>
+        </div>
+        <div class="stat-tile">
+          <p class="font-display font-bold text-[22px] text-[var(--navy)]">100%</p>
+          <p class="text-[12.5px] text-[var(--muted)] mt-1">индивидуальный подход</p>
         </div>
       </div>
     </div>
@@ -464,8 +591,9 @@
 </section>
 
 <!-- ============ SERVICES ============ -->
-<section id="services" class="py-24 md:py-32 bg-white border-y border-[var(--line)]">
-  <div class="max-w-6xl mx-auto px-5 md:px-8">
+<section id="services" class="relative py-24 md:py-32 bg-white border-y border-[var(--line)] overflow-hidden">
+  <div class="formula-layer" id="formulas-services"></div>
+  <div class="relative z-10 max-w-6xl mx-auto px-5 md:px-8">
     <div class="max-w-xl reveal">
       <span class="eyebrow">Мои услуги</span>
       <h2 class="font-display font-bold text-[30px] md:text-[36px] text-[var(--navy)] mt-4 tracking-tight">
@@ -476,27 +604,59 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-14">
 
       <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">01</span>
+        <div class="flex items-center justify-between">
+          <span class="w-10 h-10 rounded-[9px] flex items-center justify-center" style="background:rgba(14,124,147,0.1); color:var(--emerald);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          </span>
+          <span class="idx text-[26px]">01</span>
+        </div>
         <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Помощь с ДЗ</h3>
         <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Разбираем домашнее задание вместе, шаг за шагом, пока каждый пример не станет понятен.</p>
+        <button onclick="openBookingModal()" class="mt-4 text-[13px] font-display font-semibold text-[var(--emerald)] hover:text-[var(--emerald-dark)] inline-flex items-center gap-1.5 transition-colors">
+          Записаться <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
 
       <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">02</span>
+        <div class="flex items-center justify-between">
+          <span class="w-10 h-10 rounded-[9px] flex items-center justify-center" style="background:rgba(14,124,147,0.1); color:var(--emerald);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 1 3 6.7"/><path d="M3 21v-5h5"/></svg>
+          </span>
+          <span class="idx text-[26px]">02</span>
+        </div>
         <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Разбор пропущенных тем</h3>
         <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Закрываем пробелы после болезни или пропуска уроков — без ощущения, что «поезд ушёл».</p>
+        <button onclick="openBookingModal()" class="mt-4 text-[13px] font-display font-semibold text-[var(--emerald)] hover:text-[var(--emerald-dark)] inline-flex items-center gap-1.5 transition-colors">
+          Записаться <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
 
       <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">03</span>
+        <div class="flex items-center justify-between">
+          <span class="w-10 h-10 rounded-[9px] flex items-center justify-center" style="background:rgba(14,124,147,0.1); color:var(--emerald);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+          </span>
+          <span class="idx text-[26px]">03</span>
+        </div>
         <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Подготовка к экзаменам</h3>
         <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Системная подготовка к экзаменам за гимназический цикл (9 класс) с упором на реальный формат.</p>
+        <button onclick="openBookingModal()" class="mt-4 text-[13px] font-display font-semibold text-[var(--emerald)] hover:text-[var(--emerald-dark)] inline-flex items-center gap-1.5 transition-colors">
+          Записаться <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
 
       <div class="card reveal rounded-[12px] border border-[var(--line)] p-7">
-        <span class="idx text-[26px]">04</span>
+        <div class="flex items-center justify-between">
+          <span class="w-10 h-10 rounded-[9px] flex items-center justify-center" style="background:rgba(14,124,147,0.1); color:var(--emerald);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+          </span>
+          <span class="idx text-[26px]">04</span>
+        </div>
         <h3 class="font-display font-semibold text-[16.5px] text-[var(--navy)] mt-5">Индивидуальный подход</h3>
         <p class="text-[14px] text-[var(--muted)] mt-2.5 leading-relaxed">Темп и метод объяснения подбираются под конкретного ученика, а не по шаблону.</p>
+        <button onclick="openBookingModal()" class="mt-4 text-[13px] font-display font-semibold text-[var(--emerald)] hover:text-[var(--emerald-dark)] inline-flex items-center gap-1.5 transition-colors">
+          Записаться <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
       </div>
 
     </div>
@@ -508,8 +668,9 @@
   <div class="max-w-6xl mx-auto px-5 md:px-8">
     <div class="rounded-[16px] bg-[var(--navy)] relative overflow-hidden p-9 md:p-16 grid md:grid-cols-2 gap-14 items-center">
       <div class="absolute inset-0" style="background:radial-gradient(ellipse 50% 60% at 90% 100%, rgba(63,199,214,0.10), transparent 60%);"></div>
+      <div class="formula-layer" id="formulas-terms"></div>
 
-      <div class="relative reveal">
+      <div class="relative z-10 reveal">
         <span class="eyebrow on-dark">Условия и оплата</span>
         <h2 class="font-display font-bold text-[28px] md:text-[34px] text-white mt-4 leading-[1.25] tracking-tight">
           Прозрачно: одна ставка, гибкий график, оплата пакетами
@@ -530,7 +691,7 @@
         </ul>
       </div>
 
-      <div class="relative reveal">
+      <div class="relative z-10 reveal">
         <div class="rounded-[14px] bg-white p-8">
           <p class="font-display font-bold text-[var(--navy)] text-[17px]">Пакеты занятий</p>
           <p class="text-[13.5px] text-[var(--muted)] mt-1.5 leading-relaxed">Оплата онлайн заранее — удобно для регулярных занятий.</p>
@@ -546,9 +707,14 @@
             </div>
           </div>
 
-         <a href="https://mia-qr.bnm.md/1/m/BNM/AGRb1b4987ac01d4d68ba2ecd26dd7258b8" target="_blank" rel="noopener" class="btn-primary w-full mt-7 py-3.5 font-display font-semibold text-[14.5px] flex items-center justify-center">
-            Оплатить занятия онлайн
-          </a>
+         <div class="flex flex-col sm:flex-row gap-2.5 mt-7">
+           <a href="https://mia-qr.bnm.md/1/m/BNM/AGRb1b4987ac01d4d68ba2ecd26dd7258b8" target="_blank" rel="noopener" class="btn-primary flex-1 py-3.5 font-display font-semibold text-[14.5px] flex items-center justify-center">
+              Оплатить онлайн
+            </a>
+            <a href="https://t.me/algomathmd" target="_blank" rel="noopener" class="btn-ghost flex-1 py-3.5 font-display font-semibold text-[14.5px] flex items-center justify-center">
+              Уточнить пакет
+            </a>
+         </div>
           <p class="text-[11px] text-[var(--muted)] text-center mt-3">Точный пакет и способ оплаты уточняются лично</p>
         </div>
       </div>
@@ -557,8 +723,9 @@
 </section>
 
 <!-- ============ FOOTER / CONTACTS ============ -->
-<footer id="contacts" class="bg-[var(--navy)] text-white pt-24 pb-10 border-t border-[var(--line-dark)]">
-  <div class="max-w-6xl mx-auto px-5 md:px-8">
+<footer id="contacts" class="relative bg-[var(--navy)] text-white pt-24 pb-10 border-t border-[var(--line-dark)] overflow-hidden">
+  <div class="formula-layer" id="formulas-footer"></div>
+  <div class="relative z-10 max-w-6xl mx-auto px-5 md:px-8">
     <div class="grid md:grid-cols-[1.2fr_1fr] gap-16">
 
       <div>
@@ -625,6 +792,30 @@
     <p class="text-white/35 text-[12px] text-center">© 2026 AlgoMath.md · Репетитор по математике · г. Бельцы</p>
   </div>
 </footer>
+
+<!-- ============ FLOATING CONTACT WIDGET ============ -->
+<div class="contact-fab-wrap" id="contact-fab">
+  <a href="tel:+37362074442" class="contact-fab-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg>
+    Позвонить
+  </a>
+  <a href="viber://chat?number=%2B37362074442" class="contact-fab-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.68 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.32 1.85.55 2.81.68A2 2 0 0 1 22 16.92z"/></svg>
+    Viber
+  </a>
+  <a href="https://t.me/algomathmd" target="_blank" rel="noopener" class="contact-fab-item">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.5 4.5 2.7 11.9c-1.2.5-1.2 1.2-.2 1.5l4.8 1.5 1.8 5.6c.2.6.5.8 1 .8s.7-.2 1-.5l2.4-2.3 4.9 3.6c.9.5 1.5.2 1.8-.9l3.3-15.6c.3-1.4-.5-2-1.6-1.5zM8.6 13.9l9.5-6c.5-.3.9-.1.6.3l-7.9 7.3-.3 3.4-1.9-5z"/></svg>
+    Telegram
+  </a>
+  <button onclick="toggleContactFab()" class="contact-fab-main" aria-label="Связаться">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+  </button>
+</div>
+
+<!-- ============ SCROLL TO TOP ============ -->
+<button onclick="window.scrollTo({top:0,behavior:'smooth'})" id="scroll-top-btn" class="scroll-top-btn" aria-label="Наверх">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
 
 </div><!-- /view-landing -->
 <!-- ============ FIRST-RUN ADMIN SETUP ============ -->
@@ -944,6 +1135,74 @@
     });
   }, { threshold: 0.15 });
   items.forEach(i => io.observe(i));
+
+  // Подсветка активного пункта меню при прокрутке по разделам
+  const navLinks = document.querySelectorAll('.nav-link[data-nav-target]');
+  const navSections = Array.from(navLinks)
+    .map(link => document.getElementById(link.dataset.navTarget))
+    .filter(Boolean);
+
+  const setActiveNav = (id) => {
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.dataset.navTarget === id);
+    });
+  };
+
+  if (navSections.length) {
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) setActiveNav(entry.target.id);
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+    navSections.forEach(sec => navObserver.observe(sec));
+  }
+
+  // ============ ПЛАВАЮЩИЕ ФОРМУЛЫ НА ФОНЕ ============
+  const FORMULA_SETS = {
+    'formulas-hero':     { symbols: ['∫','Σ','π','√x','f(x)','∞','Δ','x²'], theme: 'on-dark', count: 9 },
+    'formulas-about':    { symbols: ['+','×','÷','=','%','∑'],              theme: 'on-light', count: 6 },
+    'formulas-services': { symbols: ['f(x)','√','≈','∂'],                  theme: 'on-light', count: 5 },
+    'formulas-terms':    { symbols: ['∫','π','Σ','±','≠'],                 theme: 'on-dark',  count: 6 },
+    'formulas-footer':   { symbols: ['∞','√x','x²','∑','∫'],               theme: 'on-dark',  count: 7 },
+  };
+
+  function spawnFormulas(){
+    Object.entries(FORMULA_SETS).forEach(([id, cfg]) => {
+      const layer = document.getElementById(id);
+      if (!layer) return;
+      let html = '';
+      for (let i = 0; i < cfg.count; i++){
+        const symbol = cfg.symbols[i % cfg.symbols.length];
+        const top = Math.round(Math.random() * 85) + '%';
+        const left = Math.round(Math.random() * 92) + '%';
+        const size = (Math.random() * 22 + 20).toFixed(0);
+        const rot = (Math.random() * 24 - 12).toFixed(1);
+        const op = (Math.random() * 0.05 + (cfg.theme === 'on-dark' ? 0.07 : 0.05)).toFixed(3);
+        const duration = (Math.random() * 5 + 7).toFixed(1);
+        const delay = (Math.random() * -10).toFixed(1);
+        html += `<span class="formula ${cfg.theme}" style="top:${top}; left:${left}; font-size:${size}px; --rot:${rot}deg; --op:${op}; animation-duration:${duration}s; animation-delay:${delay}s;">${symbol}</span>`;
+      }
+      layer.innerHTML = html;
+    });
+  }
+  spawnFormulas();
+
+  // ============ ПЛАВАЮЩАЯ КНОПКА СВЯЗИ ============
+  function toggleContactFab(){
+    document.getElementById('contact-fab').classList.toggle('open');
+  }
+  document.addEventListener('click', (e) => {
+    const fab = document.getElementById('contact-fab');
+    if (fab && !fab.contains(e.target)) fab.classList.remove('open');
+  });
+
+  // ============ КНОПКА "НАВЕРХ" ============
+  const scrollTopBtn = document.getElementById('scroll-top-btn');
+  if (scrollTopBtn){
+    window.addEventListener('scroll', () => {
+      scrollTopBtn.classList.toggle('show', window.scrollY > 500);
+    });
+  }
 </script>
 
 <script>
