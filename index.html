@@ -277,6 +277,58 @@
   }
   .dash-table tr:last-child td{ border-bottom:none; }
 
+  /* ============ CALENDAR ============ */
+  .calendar-grid-inner{
+    display:grid; grid-template-columns:repeat(7, 1fr); gap:6px;
+  }
+  .calendar-weekday{
+    font-family:'Manrope',sans-serif; font-size:10.5px; font-weight:700;
+    text-transform:uppercase; letter-spacing:0.04em; color:var(--muted);
+    text-align:center; padding-bottom:4px;
+  }
+  .calendar-day{
+    border:1px solid var(--line); border-radius:9px;
+    min-height:76px; padding:6px 6px 5px;
+    display:flex; flex-direction:column; gap:3px;
+    background:#fff;
+  }
+  .calendar-day.other-month{ background:var(--cream); opacity:0.5; }
+  .calendar-day.is-today{ border-color:var(--emerald); box-shadow:0 0 0 1px var(--emerald) inset; }
+  .calendar-day-num{ font-family:'Manrope',sans-serif; font-size:11.5px; font-weight:700; color:var(--navy); }
+  .calendar-chip{
+    font-size:10px; font-weight:600; line-height:1.3;
+    padding:2px 6px; border-radius:6px;
+    background:rgba(14,124,147,0.1); color:var(--emerald-dark);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .calendar-chip.status-done{ background:rgba(14,124,147,0.16); }
+  .calendar-chip.status-hw{ background:rgba(185,154,99,0.18); color:#8a6f3f; }
+  @media (max-width:640px){
+    .calendar-day{ min-height:52px; }
+    .calendar-chip{ font-size:9px; }
+  }
+
+  /* ============ REQUESTS / FILES LIST ROWS ============ */
+  .list-row{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    flex-wrap:wrap;
+    border:1px solid var(--line); border-radius:10px;
+    padding:12px 14px;
+  }
+  .request-status-badge{
+    display:inline-flex; align-items:center; font-family:'Manrope',sans-serif;
+    font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px;
+  }
+  .request-status-ожидает{ background:rgba(102,110,122,0.12); color:var(--muted); }
+  .request-status-подтверждено{ background:rgba(14,124,147,0.12); color:var(--emerald); }
+  .request-status-отклонено{ background:rgba(178,60,50,0.1); color:#B23C32; }
+
+  .group-header{
+    font-family:'Manrope',sans-serif; font-size:11px; font-weight:700;
+    letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);
+    padding:10px 13px 4px;
+  }
+
   @keyframes overlayIn{ from{ opacity:0; } to{ opacity:1; } }
   @keyframes modalIn{
     from{ opacity:0; transform:translateY(20px) scale(.96); }
@@ -980,6 +1032,58 @@
         </div>
       </div>
 
+      <!-- ============ CALENDAR ============ -->
+      <div class="rounded-[12px] border border-[var(--line)] bg-white p-7 mt-8">
+        <div class="flex items-center justify-between flex-wrap gap-3">
+          <div>
+            <span class="eyebrow">Расписание</span>
+            <h3 class="font-display font-bold text-[18px] text-[var(--navy)] mt-3">Календарь занятий</h3>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="calendarShiftMonth(-1)" class="btn-ghost w-9 h-9 !p-0 flex items-center justify-center" aria-label="Предыдущий месяц">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>
+            </button>
+            <p id="calendar-month-label" class="font-display font-semibold text-[14px] text-[var(--navy)] w-[150px] text-center"></p>
+            <button onclick="calendarShiftMonth(1)" class="btn-ghost w-9 h-9 !p-0 flex items-center justify-center" aria-label="Следующий месяц">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+        </div>
+        <div id="calendar-grid" class="mt-5"></div>
+      </div>
+
+      <!-- ============ REQUESTS ============ -->
+      <div class="rounded-[12px] border border-[var(--line)] bg-white p-7 mt-8">
+        <span class="eyebrow">Заявки от учеников</span>
+        <h3 class="font-display font-bold text-[18px] text-[var(--navy)] mt-3">Запросы на время занятия</h3>
+        <p class="text-[13.5px] text-[var(--muted)] mt-2 max-w-lg leading-relaxed">
+          Ученики могут предложить удобную дату и время. Подтвердите — и занятие попадёт в программу как «План», либо отклоните.
+        </p>
+        <div id="requests-list" class="mt-5 space-y-2"></div>
+      </div>
+
+      <!-- ============ MATERIALS ============ -->
+      <div class="rounded-[12px] border border-[var(--line)] bg-white p-7 mt-8">
+        <span class="eyebrow">Файлы</span>
+        <h3 class="font-display font-bold text-[18px] text-[var(--navy)] mt-3">Материалы для учеников</h3>
+        <p class="text-[13.5px] text-[var(--muted)] mt-2 max-w-lg leading-relaxed">
+          Прикрепите файл (Word, PDF и т.д.) и выберите, кому он доступен — всем ученикам или одному конкретному. Файлы хранятся в этом браузере, размер каждого — до 4 МБ.
+        </p>
+        <form onsubmit="handleUploadMaterial(event)" class="mt-5 grid sm:grid-cols-[1fr_220px_auto] gap-3 items-end">
+          <div>
+            <label class="field-label">Файл</label>
+            <input id="material-file-input" type="file" required class="field-input mt-1.5 !py-2">
+          </div>
+          <div>
+            <label class="field-label">Кому доступен</label>
+            <select id="material-scope-select" class="field-input mt-1.5"></select>
+          </div>
+          <button type="submit" class="btn-primary px-5 py-2.5 text-[13.5px] font-display font-semibold whitespace-nowrap">Загрузить</button>
+        </form>
+        <p id="material-error" class="text-[13px] text-[#B23C32] hidden mt-2"></p>
+        <div id="materials-list" class="mt-5 space-y-2"></div>
+      </div>
+
       <div class="rounded-[12px] border border-[var(--line)] bg-white p-7 mt-8">
         <span class="eyebrow">Безопасность данных</span>
         <h3 class="font-display font-bold text-[18px] text-[var(--navy)] mt-3">Резервное копирование</h3>
@@ -1225,6 +1329,8 @@ const LEAD_WORKER_URL = 'https://algomath-tg-proxy.algomathmd.workers.dev/';
 const DB_USERS = 'algomath_users_v1';
 const DB_STUDENTS = 'algomath_students_v1';
 const DB_SESSION = 'algomath_session_v1';
+const DB_MATERIALS = 'algomath_materials_v1';
+const MATERIAL_MAX_BYTES = 4 * 1024 * 1024; // 4 МБ на файл — ограничение localStorage
 
 function uid(){ return 'id_' + Math.random().toString(36).slice(2, 10); }
 
@@ -1235,6 +1341,8 @@ function saveStudents(d){ localStorage.setItem(DB_STUDENTS, JSON.stringify(d)); 
 function getSession(){ try{ return JSON.parse(localStorage.getItem(DB_SESSION)); }catch(e){ return null; } }
 function setSession(s){ localStorage.setItem(DB_SESSION, JSON.stringify(s)); }
 function clearSession(){ localStorage.removeItem(DB_SESSION); }
+function loadMaterials(){ try{ return JSON.parse(localStorage.getItem(DB_MATERIALS) || '[]'); }catch(e){ return []; } }
+function saveMaterials(d){ localStorage.setItem(DB_MATERIALS, JSON.stringify(d)); }
 
 function hasAdmin(){
   const users = loadUsers();
@@ -1404,6 +1512,9 @@ function renderAdmin(){
   renderStudentList();
   renderAdminStats();
   if(currentStudentId) renderAdminDetail(currentStudentId);
+  renderMaterialsAdmin();
+  renderRequestsAdmin();
+  renderCalendar();
 }
 
 function renderAdminStats(){
@@ -1425,23 +1536,32 @@ function renderStudentList(){
   const students = loadStudents();
   const query = (document.getElementById('student-search').value || '').toLowerCase();
   const listEl = document.getElementById('student-list');
-  const entries = Object.values(students)
-    .filter(s => s.name.toLowerCase().includes(query))
-    .sort((a, b) => {
-      const leftA = Number.isFinite(a.leftLessons) ? a.leftLessons : 99;
-      const leftB = Number.isFinite(b.leftLessons) ? b.leftLessons : 99;
-      const lowA = leftA <= 1 ? 0 : 1;
-      const lowB = leftB <= 1 ? 0 : 1;
-      if(lowA !== lowB) return lowA - lowB;
-      return a.name.localeCompare(b.name, 'ru');
-    });
+  const entries = Object.values(students).filter(s => s.name.toLowerCase().includes(query));
 
   if(entries.length === 0){
     listEl.innerHTML = '<p class="text-[13px] text-[var(--muted)] px-2 py-3">Учеников не найдено.</p>';
     return;
   }
 
-  listEl.innerHTML = entries.map(s => {
+  // Группируем по классу (разделу программы), внутри группы — сначала те, у кого мало занятий
+  const groups = {};
+  entries.forEach(s => {
+    const key = (s.grade || '').trim() || 'Без класса';
+    (groups[key] = groups[key] || []).push(s);
+  });
+
+  const gradeNum = key => {
+    const m = key.match(/\d+/);
+    return m ? parseInt(m[0], 10) : 999;
+  };
+
+  const sortedKeys = Object.keys(groups).sort((a, b) => {
+    const na = gradeNum(a), nb = gradeNum(b);
+    if(na !== nb) return na - nb;
+    return a.localeCompare(b, 'ru');
+  });
+
+  const renderCard = (s) => {
     const total = (s.program || []).length;
     const done = (s.program || []).filter(p => p.status === 'пройдено').length;
     const left = Number.isFinite(s.leftLessons) ? s.leftLessons : null;
@@ -1452,13 +1572,25 @@ function renderStudentList(){
       <div class="sidebar-item ${s.id === currentStudentId ? 'active' : ''}">
         <div class="flex-1 min-w-0 cursor-pointer" onclick="selectStudent('${s.id}')">
           <p class="${nameClass} truncate" ${nameStyle}>${isLow ? '⚠ ' : ''}${escapeHtml(s.name)}${s.source === 'self' ? ' <span class="badge badge-hw" style="font-size:9.5px;padding:1px 6px;vertical-align:middle">новая заявка</span>' : ''}</p>
-          <p class="text-[11.5px] text-[var(--muted)] mt-0.5">${escapeHtml(s.grade || '')}${left !== null ? ' · осталось ' + left : ''}</p>
+          <p class="text-[11.5px] text-[var(--muted)] mt-0.5">${left !== null ? 'осталось ' + left : ''}</p>
         </div>
         <div class="flex items-center gap-2 shrink-0">
           <span class="text-[11px] text-[var(--muted)]">${done}/${total}</span>
           <button onclick="event.stopPropagation(); quickLogLesson('${s.id}')" title="Записать урок сегодня (−1 к балансу)" class="w-6 h-6 rounded-full border border-[var(--line)] flex items-center justify-center text-[10px] font-display font-bold text-[var(--muted)] hover:border-[var(--emerald)] hover:text-[var(--emerald)] transition-colors">−1</button>
         </div>
       </div>`;
+  };
+
+  listEl.innerHTML = sortedKeys.map(key => {
+    const groupSorted = groups[key].slice().sort((a, b) => {
+      const leftA = Number.isFinite(a.leftLessons) ? a.leftLessons : 99;
+      const leftB = Number.isFinite(b.leftLessons) ? b.leftLessons : 99;
+      const lowA = leftA <= 1 ? 0 : 1;
+      const lowB = leftB <= 1 ? 0 : 1;
+      if(lowA !== lowB) return lowA - lowB;
+      return a.name.localeCompare(b.name, 'ru');
+    });
+    return `<p class="group-header">${escapeHtml(key)} · ${groupSorted.length}</p>` + groupSorted.map(renderCard).join('');
   }).join('');
 }
 
@@ -1699,6 +1831,240 @@ function handleChangeAdminPassword(e){
   showToast('Пароль администратора обновлён', 'success');
 }
 
+/* ---------------- MATERIALS (FILES FOR STUDENTS) ---------------- */
+
+function renderMaterialsAdmin(){
+  const select = document.getElementById('material-scope-select');
+  const listEl = document.getElementById('materials-list');
+  if(!select || !listEl) return;
+
+  const students = loadStudents();
+  const studentList = Object.values(students).sort((a, b) => a.name.localeCompare(b.name, 'ru'));
+
+  const prevValue = select.value;
+  select.innerHTML = '<option value="all">Всем ученикам</option>' +
+    studentList.map(s => `<option value="${s.id}">${escapeHtml(s.name)}</option>`).join('');
+  if(prevValue && [...select.options].some(o => o.value === prevValue)) select.value = prevValue;
+
+  const materials = loadMaterials().slice().sort((a, b) => (b.uploadedAt || '').localeCompare(a.uploadedAt || ''));
+
+  if(materials.length === 0){
+    listEl.innerHTML = '<p class="text-[13px] text-[var(--muted)]">Файлов пока нет.</p>';
+    return;
+  }
+
+  listEl.innerHTML = materials.map(m => {
+    const scopeLabel = m.scope === 'all' ? 'Всем ученикам' : (students[m.scope] ? escapeHtml(students[m.scope].name) : 'Ученик удалён');
+    const sizeKb = Math.round((m.size || 0) / 1024);
+    return `
+      <div class="list-row">
+        <div class="min-w-0 flex-1">
+          <p class="text-[13.5px] font-medium text-[var(--navy)] truncate">${escapeHtml(m.fileName)}</p>
+          <p class="text-[11.5px] text-[var(--muted)] mt-0.5">${scopeLabel} · ${sizeKb} КБ</p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          <a href="${m.dataUrl}" download="${escapeAttr(m.fileName)}" class="btn-ghost px-3.5 py-1.5 text-[12.5px] font-medium">Скачать</a>
+          <button onclick="deleteMaterial('${m.id}')" class="text-[var(--muted)] hover:text-[#B23C32] transition-colors" title="Удалить файл">✕</button>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+function handleUploadMaterial(e){
+  e.preventDefault();
+  const fileInput = document.getElementById('material-file-input');
+  const scope = document.getElementById('material-scope-select').value;
+  const errEl = document.getElementById('material-error');
+  errEl.classList.add('hidden');
+
+  const file = fileInput.files[0];
+  if(!file) return;
+
+  if(file.size > MATERIAL_MAX_BYTES){
+    errEl.textContent = 'Файл слишком большой (максимум 4 МБ). Сожмите файл или используйте внешнюю ссылку.';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const materials = loadMaterials();
+      materials.push({
+        id: uid(),
+        fileName: file.name,
+        mimeType: file.type,
+        size: file.size,
+        dataUrl: reader.result,
+        scope,
+        uploadedAt: new Date().toISOString()
+      });
+      saveMaterials(materials);
+      fileInput.value = '';
+      renderMaterialsAdmin();
+      showToast('Файл загружен', 'success');
+    }catch(err){
+      errEl.textContent = 'Не удалось сохранить файл — в этом браузере закончилось место для хранения. Удалите старые файлы и попробуйте снова.';
+      errEl.classList.remove('hidden');
+    }
+  };
+  reader.onerror = () => {
+    errEl.textContent = 'Не удалось прочитать файл.';
+    errEl.classList.remove('hidden');
+  };
+  reader.readAsDataURL(file);
+}
+
+function deleteMaterial(id){
+  if(!confirm('Удалить файл? Ученики больше не смогут его открыть.')) return;
+  const materials = loadMaterials().filter(m => m.id !== id);
+  saveMaterials(materials);
+  renderMaterialsAdmin();
+  showToast('Файл удалён', 'warning');
+}
+
+/* ---------------- LESSON TIME REQUESTS ---------------- */
+
+function renderRequestsAdmin(){
+  const listEl = document.getElementById('requests-list');
+  if(!listEl) return;
+
+  const students = loadStudents();
+  const all = [];
+  Object.values(students).forEach(st => {
+    (st.requests || []).forEach(r => all.push({ ...r, studentId: st.id, studentName: st.name }));
+  });
+
+  all.sort((a, b) => {
+    const order = { 'ожидает': 0, 'подтверждено': 1, 'отклонено': 2 };
+    const byStatus = (order[a.status] ?? 3) - (order[b.status] ?? 3);
+    if(byStatus !== 0) return byStatus;
+    return (a.date + (a.time || '')).localeCompare(b.date + (b.time || ''));
+  });
+
+  if(all.length === 0){
+    listEl.innerHTML = '<p class="text-[13px] text-[var(--muted)]">Заявок пока нет.</p>';
+    return;
+  }
+
+  listEl.innerHTML = all.map(r => `
+    <div class="list-row">
+      <div class="min-w-0 flex-1">
+        <p class="text-[13.5px] font-medium text-[var(--navy)]">${escapeHtml(r.studentName)} · ${formatDate(r.date)}${r.time ? ', ' + r.time : ''}</p>
+        ${r.note ? `<p class="text-[12.5px] text-[var(--muted)] mt-0.5">${escapeHtml(r.note)}</p>` : ''}
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <span class="request-status-badge request-status-${r.status}">${r.status}</span>
+        ${r.status === 'ожидает' ? `
+          <button onclick="respondToRequest('${r.studentId}', '${r.id}', 'подтверждено')" class="btn-ghost px-3 py-1.5 text-[12px] font-medium">Принять</button>
+          <button onclick="respondToRequest('${r.studentId}', '${r.id}', 'отклонено')" class="btn-danger-ghost px-3 py-1.5 text-[12px] font-medium">Отклонить</button>
+        ` : ''}
+      </div>
+    </div>`).join('');
+}
+
+function respondToRequest(studentId, requestId, newStatus){
+  const students = loadStudents();
+  const st = students[studentId];
+  if(!st) return;
+  const req = (st.requests || []).find(r => r.id === requestId);
+  if(!req) return;
+
+  req.status = newStatus;
+
+  if(newStatus === 'подтверждено'){
+    st.program = st.program || [];
+    st.program.push({
+      id: uid(),
+      topic: req.note ? `Занятие по запросу: ${req.note}` : 'Занятие по запросу ученика',
+      date: req.date,
+      status: 'план',
+      homework: '',
+      notes: req.time ? `Время: ${req.time}` : ''
+    });
+  }
+
+  saveStudents(students);
+  renderRequestsAdmin();
+  renderAdminStats();
+  renderStudentList();
+  renderCalendar();
+  if(currentStudentId === studentId) renderAdminDetail(studentId);
+  showToast(newStatus === 'подтверждено' ? 'Заявка подтверждена и добавлена в программу' : 'Заявка отклонена', newStatus === 'подтверждено' ? 'success' : 'warning');
+}
+
+/* ---------------- CALENDAR ---------------- */
+
+let calendarMonthOffset = 0;
+
+function calendarShiftMonth(delta){
+  calendarMonthOffset += delta;
+  renderCalendar();
+}
+
+function renderCalendar(){
+  const gridEl = document.getElementById('calendar-grid');
+  const labelEl = document.getElementById('calendar-month-label');
+  if(!gridEl || !labelEl) return;
+
+  const base = new Date();
+  base.setDate(1);
+  base.setMonth(base.getMonth() + calendarMonthOffset);
+  const year = base.getFullYear();
+  const month = base.getMonth();
+
+  const monthNames = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
+  labelEl.textContent = `${monthNames[month]} ${year}`;
+
+  const firstOfMonth = new Date(year, month, 1);
+  const startOffset = (firstOfMonth.getDay() + 6) % 7; // понедельник = 0
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+  const students = loadStudents();
+  const byDate = {};
+  Object.values(students).forEach(st => {
+    (st.program || []).forEach(p => {
+      if(!p.date) return;
+      (byDate[p.date] = byDate[p.date] || []).push({ name: st.name, status: p.status });
+    });
+  });
+
+  const todayIsoStr = todayIso();
+  const pad = n => String(n).padStart(2, '0');
+
+  const cells = [];
+  for(let i = startOffset - 1; i >= 0; i--){
+    cells.push({ day: daysInPrevMonth - i, otherMonth: true, iso: null });
+  }
+  for(let d = 1; d <= daysInMonth; d++){
+    cells.push({ day: d, otherMonth: false, iso: `${year}-${pad(month + 1)}-${pad(d)}` });
+  }
+  while(cells.length % 7 !== 0){
+    cells.push({ day: cells.length - (startOffset + daysInMonth) + 1, otherMonth: true, iso: null });
+  }
+
+  const statusClass = { 'план': '', 'пройдено': 'status-done', 'дз': 'status-hw' };
+  const weekdayNames = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+
+  const weekdaysHtml = weekdayNames.map(w => `<div class="calendar-weekday">${w}</div>`).join('');
+  const cellsHtml = cells.map(c => {
+    const entries = c.iso ? (byDate[c.iso] || []) : [];
+    const chips = entries.slice(0, 3).map(en =>
+      `<span class="calendar-chip ${statusClass[en.status] || ''}" title="${escapeAttr(en.name)}">${escapeHtml(en.name.split(' ')[0])}</span>`
+    ).join('');
+    const more = entries.length > 3 ? `<span class="calendar-chip">+${entries.length - 3}</span>` : '';
+    const isToday = c.iso === todayIsoStr;
+    return `
+      <div class="calendar-day ${c.otherMonth ? 'other-month' : ''} ${isToday ? 'is-today' : ''}">
+        <span class="calendar-day-num">${c.day}</span>
+        ${chips}${more}
+      </div>`;
+  }).join('');
+
+  gridEl.innerHTML = `<div class="calendar-grid-inner">${weekdaysHtml}${cellsHtml}</div>`;
+}
+
 /* ---------------- LEAD BOOKING MODAL (Telegram) ---------------- */
 
 function openBookingModal(){
@@ -1865,6 +2231,32 @@ function renderStudent(){
       </div>
     </div>
 
+    <div class="rounded-[12px] border border-[var(--line)] bg-white p-6 mt-6">
+      <p class="field-label mb-4">Материалы от преподавателя</p>
+      <div id="student-materials-list" class="space-y-2"></div>
+    </div>
+
+    <div class="rounded-[12px] border border-[var(--line)] bg-white p-6 mt-6">
+      <p class="field-label mb-1">Предложить время занятия</p>
+      <p class="text-[13px] text-[var(--muted)] mb-4">Укажите удобные дату и время — Дмитрий подтвердит или предложит другое.</p>
+      <form onsubmit="handleRequestSubmit(event)" class="grid sm:grid-cols-[160px_130px_1fr_auto] gap-3 items-end">
+        <div>
+          <label class="text-[12px] text-[var(--muted)]">Дата</label>
+          <input id="request-date" type="date" required class="field-input mt-1.5">
+        </div>
+        <div>
+          <label class="text-[12px] text-[var(--muted)]">Время</label>
+          <input id="request-time" type="time" required class="field-input mt-1.5">
+        </div>
+        <div>
+          <label class="text-[12px] text-[var(--muted)]">Комментарий (необязательно)</label>
+          <input id="request-note" class="field-input mt-1.5" placeholder="например, после школы удобнее">
+        </div>
+        <button type="submit" class="btn-primary px-5 py-2.5 text-[13.5px] font-display font-semibold whitespace-nowrap">Отправить</button>
+      </form>
+      <div id="student-requests-list" class="mt-5 space-y-2"></div>
+    </div>
+
     <div class="rounded-[14px] bg-[var(--navy)] relative overflow-hidden p-7 md:p-9 mt-6">
       <div class="absolute inset-0" style="background:radial-gradient(ellipse 60% 60% at 90% 0%, rgba(63,199,214,0.14), transparent 60%);"></div>
       <div class="relative">
@@ -1884,6 +2276,81 @@ function renderStudent(){
       </div>
     </div>
   `;
+
+  renderStudentMaterials(st);
+  renderStudentRequests(st);
+  const dateInput = document.getElementById('request-date');
+  if(dateInput) dateInput.min = todayIso();
+}
+
+function renderStudentMaterials(st){
+  const listEl = document.getElementById('student-materials-list');
+  if(!listEl) return;
+
+  const materials = loadMaterials()
+    .filter(m => m.scope === 'all' || m.scope === st.id)
+    .sort((a, b) => (b.uploadedAt || '').localeCompare(a.uploadedAt || ''));
+
+  if(materials.length === 0){
+    listEl.innerHTML = '<p class="text-[13px] text-[var(--muted)]">Пока нет прикреплённых файлов.</p>';
+    return;
+  }
+
+  listEl.innerHTML = materials.map(m => {
+    const sizeKb = Math.round((m.size || 0) / 1024);
+    return `
+      <div class="list-row">
+        <div class="min-w-0 flex-1">
+          <p class="text-[13.5px] font-medium text-[var(--navy)] truncate">${escapeHtml(m.fileName)}</p>
+          <p class="text-[11.5px] text-[var(--muted)] mt-0.5">${sizeKb} КБ</p>
+        </div>
+        <a href="${m.dataUrl}" download="${escapeAttr(m.fileName)}" class="btn-primary px-4 py-2 text-[12.5px] font-display font-semibold shrink-0">Скачать</a>
+      </div>`;
+  }).join('');
+}
+
+function renderStudentRequests(st){
+  const listEl = document.getElementById('student-requests-list');
+  if(!listEl) return;
+
+  const requests = (st.requests || []).slice().sort((a, b) => (b.createdAt || '').localeCompare(a.createdAt || ''));
+
+  if(requests.length === 0){
+    listEl.innerHTML = '';
+    return;
+  }
+
+  listEl.innerHTML = requests.map(r => `
+    <div class="list-row">
+      <div class="min-w-0 flex-1">
+        <p class="text-[13.5px] font-medium text-[var(--navy)]">${formatDate(r.date)}${r.time ? ', ' + r.time : ''}</p>
+        ${r.note ? `<p class="text-[12.5px] text-[var(--muted)] mt-0.5">${escapeHtml(r.note)}</p>` : ''}
+      </div>
+      <span class="request-status-badge request-status-${r.status}">${r.status}</span>
+    </div>`).join('');
+}
+
+function handleRequestSubmit(e){
+  e.preventDefault();
+  const s = getSession();
+  if(!s || s.role !== 'student') return;
+
+  const date = document.getElementById('request-date').value;
+  const time = document.getElementById('request-time').value;
+  const note = document.getElementById('request-note').value.trim();
+
+  const students = loadStudents();
+  const st = students[s.studentId];
+  if(!st) return;
+
+  st.requests = st.requests || [];
+  st.requests.push({ id: uid(), date, time, note, status: 'ожидает', createdAt: new Date().toISOString() });
+  saveStudents(students);
+
+  e.target.reset();
+  document.getElementById('request-date').min = todayIso();
+  renderStudentRequests(st);
+  showToast('Заявка отправлена — ждите подтверждения', 'success');
 }
 
 /* ---------------- BACKUP / RESTORE ---------------- */
@@ -1892,7 +2359,8 @@ function exportDatabase(){
   const payload = {
     exportedAt: new Date().toISOString(),
     users: loadUsers(),
-    students: loadStudents()
+    students: loadStudents(),
+    materials: loadMaterials()
   };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -1923,6 +2391,7 @@ function importDatabase(event){
       }
       saveUsers(data.users);
       saveStudents(data.students);
+      if(data.materials) saveMaterials(data.materials);
       currentStudentId = null;
       renderAdmin();
       showToast('База успешно импортирована', 'success');
