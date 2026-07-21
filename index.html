@@ -17,6 +17,7 @@
 <meta name="description" content="Услуги индивидуального репетитора по математике в Бельцах для учеников 5–10 классов. Занятия у вас дома, подтягивание успеваемости, подготовка к экзаменам.">
 <meta name="keywords" content="репетитор по математике бельцы, уроки математики бельцы, подготовка к экзаменам математика бельцы, математика 9 класс бельцы">
 <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -329,6 +330,15 @@
     padding:10px 13px 4px;
   }
 
+  /* ============ REVIEWS ============ */
+  .review-star{
+    cursor:pointer; color:var(--line); transition:color .15s ease, transform .15s ease;
+  }
+  .review-star:hover, .review-star.active{ color:var(--gold); }
+  .review-star:hover{ transform:scale(1.12); }
+  .review-stars-display{ color:var(--gold); display:inline-flex; gap:1px; }
+  .review-stars-display svg{ display:inline-block; }
+
   @keyframes overlayIn{ from{ opacity:0; } to{ opacity:1; } }
   @keyframes modalIn{
     from{ opacity:0; transform:translateY(20px) scale(.96); }
@@ -494,6 +504,7 @@
     <nav class="hidden md:flex items-center gap-9 text-[13.5px] font-medium text-[var(--graphite)]">
       <a href="#about" data-nav-target="about" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Обо мне</a>
       <a href="#services" data-nav-target="services" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Услуги</a>
+      <a href="#reviews" data-nav-target="reviews" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Отзывы</a>
       <a href="#terms" data-nav-target="terms" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Условия</a>
       <a href="#contacts" data-nav-target="contacts" onclick="showView('landing')" class="nav-link hover:text-[var(--emerald)] transition-colors">Контакты</a>
     </nav>
@@ -592,14 +603,15 @@
 
     <!-- Photo placeholder -->
     <div class="reveal">
-  <div class="relative aspect-[4/5] rounded-[14px] bg-[var(--navy-2)] overflow-hidden flex items-center justify-center border border-[var(--navy)]">
-    <img 
-      src="images.jpg" 
-      alt="Профессиональное фото" 
-      class="w-full h-full object-cover"
-    />
-  </div>
-</div>
+      <div class="relative aspect-[4/5] rounded-[14px] bg-[var(--navy-2)] overflow-hidden flex items-center justify-center border border-[var(--navy)]">
+        <div class="text-center text-white/55 px-6">
+          <div class="w-14 h-14 mx-auto rounded-full border border-white/25 flex items-center justify-center mb-4">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+          </div>
+          <p class="text-[13px] font-display font-medium leading-relaxed">Место для<br>профессионального фото</p>
+        </div>
+      </div>
+    </div>
 
     <div class="reveal">
       <span class="eyebrow">Обо мне</span>
@@ -715,6 +727,28 @@
 </section>
 
 <!-- ============ TERMS & PAYMENT ============ -->
+<!-- ============ REVIEWS ============ -->
+<section id="reviews" class="relative py-24 md:py-32 bg-[var(--cream)] overflow-hidden">
+  <div class="formula-layer" id="formulas-reviews"></div>
+  <div class="relative z-10 max-w-6xl mx-auto px-5 md:px-8">
+    <div class="flex items-end justify-between flex-wrap gap-5 reveal">
+      <div class="max-w-xl">
+        <span class="eyebrow">Отзывы</span>
+        <h2 class="font-display font-bold text-[30px] md:text-[36px] text-[var(--navy)] mt-4 tracking-tight">
+          Что говорят ученики и родители
+        </h2>
+      </div>
+      <button onclick="openReviewModal()" class="btn-primary px-5 py-2.5 text-[13.5px] font-display font-semibold whitespace-nowrap">
+        Оставить отзыв
+      </button>
+    </div>
+
+    <div id="reviews-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-12">
+      <p class="text-[13.5px] text-[var(--muted)]">Загрузка отзывов…</p>
+    </div>
+  </div>
+</section>
+
 <section id="terms" class="py-24 md:py-32 bg-[var(--cream)]">
   <div class="max-w-6xl mx-auto px-5 md:px-8">
     <div class="rounded-[16px] bg-[var(--navy)] relative overflow-hidden p-9 md:p-16 grid md:grid-cols-2 gap-14 items-center">
@@ -882,7 +916,7 @@
         <form onsubmit="handleSetupAdmin(event)" class="mt-7 space-y-4">
           <div>
             <label class="field-label">Логин администратора</label>
-            <input id="setup-username" type="text" autocomplete="username" required class="field-input mt-1.5" placeholder="Логин">
+            <input id="setup-username" type="text" autocomplete="username" required class="field-input mt-1.5" placeholder="например, admin">
           </div>
           <div>
             <label class="field-label">Пароль</label>
@@ -961,7 +995,7 @@
         <form onsubmit="handleLogin(event)" class="mt-7 space-y-4">
           <div>
             <label class="field-label">Логин</label>
-            <input id="login-username" type="text" autocomplete="username" required class="field-input mt-1.5" placeholder="Логин">
+            <input id="login-username" type="text" autocomplete="username" required class="field-input mt-1.5" placeholder="например, admin">
           </div>
           <div>
             <label class="field-label">Пароль</label>
@@ -1028,6 +1062,18 @@
         <!-- Selected student detail -->
         <div id="admin-detail" class="rounded-[12px] border border-[var(--line)] bg-white p-7">
           <p class="text-[14px] text-[var(--muted)]">Выберите ученика слева или добавьте нового, чтобы построить программу занятий.</p>
+        </div>
+      </div>
+
+      <!-- ============ REVIEWS MODERATION ============ -->
+      <div class="rounded-[12px] border border-[var(--line)] bg-white p-7 mt-8">
+        <span class="eyebrow">Отзывы</span>
+        <h3 class="font-display font-bold text-[18px] text-[var(--navy)] mt-3">Модерация отзывов</h3>
+        <p class="text-[13.5px] text-[var(--muted)] mt-2 max-w-lg leading-relaxed">
+          Новые отзывы попадают сюда со статусом «На проверке». Одобренные сразу появляются на сайте.
+        </p>
+        <div id="admin-reviews-list" class="mt-5 space-y-2">
+          <p class="text-[13px] text-[var(--muted)]">Загрузка…</p>
         </div>
       </div>
 
@@ -1181,6 +1227,39 @@
   </div>
 </div>
 
+<!-- ============ REVIEW MODAL ============ -->
+<div id="modal-review" class="modal-overlay" style="display:none">
+  <div class="modal-card">
+    <button onclick="closeReviewModal()" class="float-right w-8 h-8 -mt-1 -mr-1 rounded-full flex items-center justify-center text-[var(--muted)] hover:text-[var(--navy)] hover:bg-[rgba(16,26,44,0.06)] text-[16px] leading-none transition-all" aria-label="Закрыть">✕</button>
+    <h3 class="font-display font-bold text-[19px] text-[var(--navy)] mt-4">Оставить отзыв</h3>
+    <p class="text-[13.5px] text-[var(--muted)] mt-1.5">Отзыв появится на сайте после проверки.</p>
+
+    <form id="review-form" onsubmit="handleReviewSubmit(event)" class="mt-6 space-y-4">
+      <div>
+        <label class="field-label">Ваше имя</label>
+        <input id="review-name" required class="field-input mt-1.5" placeholder="Как подписать отзыв">
+      </div>
+      <div>
+        <label class="field-label">Класс ученика (необязательно)</label>
+        <input id="review-grade" class="field-input mt-1.5" placeholder="например, 8 класс">
+      </div>
+      <div>
+        <label class="field-label">Оценка</label>
+        <div id="review-star-picker" class="flex items-center gap-1.5 mt-2"></div>
+        <input type="hidden" id="review-rating" value="5">
+      </div>
+      <div>
+        <label class="field-label">Отзыв</label>
+        <textarea id="review-text" required rows="4" class="field-input mt-1.5" placeholder="Расскажите, как прошли занятия"></textarea>
+      </div>
+      <p id="review-error" class="text-[13px] text-[#B23C32] hidden"></p>
+      <button id="review-submit-btn" type="submit" class="btn-primary w-full py-3 font-display font-semibold text-[14.5px]">
+        Отправить отзыв
+      </button>
+    </form>
+  </div>
+</div>
+
 <div id="modal-add-student" class="modal-overlay" style="display:none">
   <div class="modal-card">
     <h3 class="font-display font-bold text-[18px] text-[var(--navy)]">Новый ученик</h3>
@@ -1265,6 +1344,7 @@
     'formulas-hero':     { symbols: ['∫','Σ','π','√x','f(x)','∞','Δ','x²'], theme: 'on-dark', count: 9 },
     'formulas-about':    { symbols: ['+','×','÷','=','%','∑'],              theme: 'on-light', count: 6 },
     'formulas-services': { symbols: ['f(x)','√','≈','∂'],                  theme: 'on-light', count: 5 },
+    'formulas-reviews':  { symbols: ['+','=','∑','★'],                    theme: 'on-light', count: 5 },
     'formulas-terms':    { symbols: ['∫','π','Σ','±','≠'],                 theme: 'on-dark',  count: 6 },
     'formulas-footer':   { symbols: ['∞','√x','x²','∑','∫'],               theme: 'on-dark',  count: 7 },
   };
@@ -1289,6 +1369,7 @@
     });
   }
   spawnFormulas();
+  loadPublicReviews();
 
   // ============ ПЛАВАЮЩАЯ КНОПКА СВЯЗИ ============
   function toggleContactFab(){
@@ -1324,6 +1405,21 @@
    Вставьте сюда URL вашего Worker'а из Шага 2 инструкции.
    ========================================================= */
 const LEAD_WORKER_URL = 'https://algomath-tg-proxy.algomathmd.workers.dev/';
+
+/* =========================================================
+   SUPABASE — база для отзывов (в будущем сюда переедут
+   и остальные данные, чтобы работать с разных устройств).
+   Вставьте сюда Project URL и anon-ключ из Supabase → Settings → API.
+   ========================================================= */
+const SUPABASE_URL = 'https://qowufhcjumzoyjdfuvvq.supabase.co'; // например: https://xxxxxxxx.supabase.co
+const SUPABASE_ANON_KEY = 'sb_publishable__INDYbQZa38EiPbxsQqumw_Lc2jinXb';
+const supabaseClient = (typeof supabase !== 'undefined' && SUPABASE_URL.startsWith('http'))
+  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+  : null;
+
+// Общий "пароль" между сайтом и Worker'ом для админ-действий (модерация отзывов).
+// Смените на свою случайную строку и укажите ТАКУЮ ЖЕ в переменной ADMIN_API_SECRET Worker'а.
+const ADMIN_API_SECRET = 'Covid-19';
 
 const DB_USERS = 'algomath_users_v1';
 const DB_STUDENTS = 'algomath_students_v1';
@@ -1514,6 +1610,7 @@ function renderAdmin(){
   renderMaterialsAdmin();
   renderRequestsAdmin();
   renderCalendar();
+  loadAdminReviews();
 }
 
 function renderAdminStats(){
@@ -2106,6 +2203,177 @@ async function handleLeadSubmit(e){
   }finally{
     btn.disabled = false;
     btn.textContent = originalBtnText;
+  }
+}
+
+/* ---------------- REVIEWS (public: Supabase direct; admin: via Worker) ---------------- */
+
+const STAR_SVG = (filled) => `<svg width="22" height="22" viewBox="0 0 24 24" fill="${filled ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.6"><path d="M12 2.5l2.9 6.1 6.6.7-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.2 1.3-6.6-4.9-4.6 6.6-.7z"/></svg>`;
+
+function renderStarsDisplay(rating){
+  let html = '<span class="review-stars-display">';
+  for(let i = 1; i <= 5; i++) html += STAR_SVG(i <= rating);
+  return html + '</span>';
+}
+
+function renderStarPicker(){
+  const wrap = document.getElementById('review-star-picker');
+  if(!wrap) return;
+  const current = parseInt(document.getElementById('review-rating').value, 10) || 5;
+  wrap.innerHTML = [1,2,3,4,5].map(i =>
+    `<span class="review-star ${i <= current ? 'active' : ''}" onclick="setReviewRating(${i})">${STAR_SVG(i <= current)}</span>`
+  ).join('');
+}
+function setReviewRating(n){
+  document.getElementById('review-rating').value = n;
+  renderStarPicker();
+}
+
+function openReviewModal(){
+  document.getElementById('review-error').classList.add('hidden');
+  document.getElementById('review-rating').value = 5;
+  renderStarPicker();
+  document.getElementById('modal-review').style.display = 'flex';
+}
+function closeReviewModal(){ document.getElementById('modal-review').style.display = 'none'; }
+
+async function handleReviewSubmit(e){
+  e.preventDefault();
+  const errEl = document.getElementById('review-error');
+  const btn = document.getElementById('review-submit-btn');
+  errEl.classList.add('hidden');
+
+  if(!supabaseClient){
+    errEl.textContent = 'База отзывов ещё не подключена (нет ключей Supabase в коде сайта).';
+    errEl.classList.remove('hidden');
+    return;
+  }
+
+  const author_name = document.getElementById('review-name').value.trim();
+  const grade = document.getElementById('review-grade').value.trim();
+  const rating = parseInt(document.getElementById('review-rating').value, 10) || 5;
+  const review_text = document.getElementById('review-text').value.trim();
+
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = 'Отправка...';
+
+  try{
+    const { error } = await supabaseClient.from('reviews').insert([{
+      author_name, grade, rating, review_text, status: 'pending'
+    }]);
+    if(error) throw error;
+
+    showToast('Спасибо! Отзыв отправлен на проверку.', 'success');
+    e.target.reset();
+    closeReviewModal();
+  }catch(err){
+    console.error('Review submit error:', err);
+    errEl.textContent = 'Не удалось отправить отзыв. Попробуйте ещё раз позже.';
+    errEl.classList.remove('hidden');
+  }finally{
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+async function loadPublicReviews(){
+  const grid = document.getElementById('reviews-grid');
+  if(!grid) return;
+
+  if(!supabaseClient){
+    grid.innerHTML = '<p class="text-[13.5px] text-[var(--muted)]">Отзывы скоро появятся здесь.</p>';
+    return;
+  }
+
+  try{
+    const { data, error } = await supabaseClient
+      .from('reviews')
+      .select('*')
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false })
+      .limit(12);
+    if(error) throw error;
+
+    if(!data || data.length === 0){
+      grid.innerHTML = '<p class="text-[13.5px] text-[var(--muted)]">Отзывов пока нет — будьте первым!</p>';
+      return;
+    }
+
+    grid.innerHTML = data.map(r => `
+      <div class="card reveal in rounded-[12px] border border-[var(--line)] p-6 bg-white">
+        ${renderStarsDisplay(r.rating)}
+        <p class="text-[14px] text-[var(--graphite)] mt-3 leading-relaxed">${escapeHtml(r.review_text)}</p>
+        <p class="text-[13px] font-display font-semibold text-[var(--navy)] mt-4">${escapeHtml(r.author_name)}</p>
+        ${r.grade ? `<p class="text-[11.5px] text-[var(--muted)]">${escapeHtml(r.grade)}</p>` : ''}
+      </div>`).join('');
+  }catch(err){
+    console.error('Load reviews error:', err);
+    grid.innerHTML = '<p class="text-[13.5px] text-[var(--muted)]">Не удалось загрузить отзывы.</p>';
+  }
+}
+
+// ---- Админ-модерация: приватные действия идут через Cloudflare Worker
+// (там используется секретный service-key Supabase, которого нет в браузере)
+async function loadAdminReviews(){
+  const listEl = document.getElementById('admin-reviews-list');
+  if(!listEl) return;
+
+  if(!supabaseClient){
+    listEl.innerHTML = '<p class="text-[13px] text-[var(--muted)]">База отзывов не подключена.</p>';
+    return;
+  }
+
+  try{
+    const response = await fetch(LEAD_WORKER_URL + 'reviews', {
+      headers: { 'X-Admin-Key': ADMIN_API_SECRET }
+    });
+    const result = await response.json();
+    if(!response.ok || !result.ok) throw new Error(result.error || 'Request failed');
+
+    const reviews = result.reviews || [];
+    if(reviews.length === 0){
+      listEl.innerHTML = '<p class="text-[13px] text-[var(--muted)]">Отзывов пока нет.</p>';
+      return;
+    }
+
+    listEl.innerHTML = reviews.map(r => `
+      <div class="list-row">
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center gap-2 flex-wrap">
+            <p class="text-[13.5px] font-medium text-[var(--navy)]">${escapeHtml(r.author_name)}</p>
+            ${renderStarsDisplay(r.rating)}
+            <span class="request-status-badge request-status-${r.status === 'approved' ? 'подтверждено' : 'ожидает'}">${r.status === 'approved' ? 'одобрен' : 'на проверке'}</span>
+          </div>
+          <p class="text-[12.5px] text-[var(--muted)] mt-1">${escapeHtml(r.review_text)}</p>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+          ${r.status !== 'approved' ? `<button onclick="moderateReview('${r.id}', 'approved')" class="btn-ghost px-3 py-1.5 text-[12px] font-medium">Одобрить</button>` : ''}
+          <button onclick="moderateReview('${r.id}', 'delete')" class="btn-danger-ghost px-3 py-1.5 text-[12px] font-medium">Удалить</button>
+        </div>
+      </div>`).join('');
+  }catch(err){
+    console.error('Load admin reviews error:', err);
+    listEl.innerHTML = '<p class="text-[13px] text-[#B23C32]">Не удалось загрузить отзывы. Проверьте, что Worker обновлён и ключи Supabase указаны верно.</p>';
+  }
+}
+
+async function moderateReview(id, action){
+  try{
+    const response = await fetch(LEAD_WORKER_URL + 'reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Admin-Key': ADMIN_API_SECRET },
+      body: JSON.stringify({ id, action })
+    });
+    const result = await response.json();
+    if(!response.ok || !result.ok) throw new Error(result.error || 'Request failed');
+
+    showToast(action === 'delete' ? 'Отзыв удалён' : 'Отзыв одобрен', action === 'delete' ? 'warning' : 'success');
+    loadAdminReviews();
+    loadPublicReviews();
+  }catch(err){
+    console.error('Moderate review error:', err);
+    showToast('Не удалось выполнить действие', 'danger');
   }
 }
 
